@@ -29,4 +29,10 @@
 .container__wrapper {
   width: 800px;
   height: 800px;
+  margin: 0 auto;
+}
+
+.container__wrapper img {
+  width: 100%;
+  height: 100%;
 }

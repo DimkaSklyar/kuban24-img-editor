@@ -21,8 +21,3 @@ export const AppStyle = styled.div`
   padding: 50px;
   flex-direction: column;
 `;
-
-export const SCDropzoneAreaBaseStyle = styled(DropzoneAreaBase)`
-  height: 100%;
-  width: 100%;
-`;
