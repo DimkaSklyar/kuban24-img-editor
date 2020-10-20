@@ -3,3 +3,30 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+.upload-block {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.containerImage {
+  width: 100%;
+  height: 100%;
+}
+
+.containerImage img {
+  width: 100%;
+  height: 100%;
+}
+
+.pos-a {
+  position: absolute;
+}
+
+.container__wrapper {
+  width: 800px;
+  height: 800px;
+}
