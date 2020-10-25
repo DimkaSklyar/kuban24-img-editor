@@ -1,6 +1,5 @@
 import React from "react";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
@@ -35,20 +34,21 @@ const SelectFonts: React.FC<IPopoverPopupState> = ({
   selectedFont,
 }) => {
   const classes = useStyles();
-
   return (
     <div>
       <FormControl className={classes.formControl}>
-        <InputLabel id="demo-simple-select-label">Выбор шрифта</InputLabel>
         <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
           value={selectedFont}
           onChange={onSelectFont}
+          displayEmpty
+          inputProps={{ "aria-label": "Without label" }}
         >
+          <MenuItem value="" disabled>
+            <em>Выбор шрифта</em>
+          </MenuItem>
+          <MenuItem value={"'Inter', sans-serif"}>Inter</MenuItem>
           <MenuItem value={"'Consolas'"}>Consolas</MenuItem>
-          <MenuItem value={"'Times New Romans'"}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
+          <MenuItem value={"'Times New Romans'"}>Times New Romans</MenuItem>
         </Select>
       </FormControl>
     </div>

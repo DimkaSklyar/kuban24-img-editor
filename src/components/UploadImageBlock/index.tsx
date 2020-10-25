@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Rnd } from "react-rnd";
 
 import { NavigateNext } from "@material-ui/icons";
 import { Button } from "@material-ui/core";

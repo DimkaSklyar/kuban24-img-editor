@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import { Button } from "@material-ui/core";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import { NavigateNext } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 

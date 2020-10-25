@@ -27,8 +27,9 @@
 }
 
 .container__wrapper {
-  width: 800px;
-  height: 800px;
+  position: relative;
+  width: 1080px;
+  height: 1080px;
   display: flex;
   justify-content: center;
   align-items: center;
