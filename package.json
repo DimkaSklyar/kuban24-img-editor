@@ -21,6 +21,7 @@
     "@types/react-router-dom": "^5.1.6",
     "@types/styled-components": "^5.1.4",
     "downloadjs": "^1.4.7",
+    "image-screenshot": "^0.1.1",
     "material-ui-dropzone": "^3.5.0",
     "material-ui-popup-state": "^1.7.0",
     "node-sass": "^4.14.1",

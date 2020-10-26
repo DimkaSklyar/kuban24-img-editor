@@ -5,6 +5,7 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import html2canvas from "@nidi/html2canvas";
 
+
 import SaveIcon from "@material-ui/icons/Save";
 import { Container, IconButton } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
@@ -56,6 +57,7 @@ function App() {
   const [textAlign, setTextAlign] = React.useState(arrayTextAlign[1]);
   const [verticalCenter, setVerticallCenter] = React.useState(true);
   const [positionBlock, setPositionBlock] = React.useState(true);
+  const [bcgImg, setBcgImg] = React.useState<any>("");
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setSelectFont(event.target.value as string);
   };
@@ -73,6 +75,7 @@ function App() {
       windowWidth: refImg.current.scrollWidth,
       height: 1080,
       imageTimeout: 2000,
+      allowTaint: true,
     }).then((canvas) => {
       download(canvas.toDataURL());
     });
@@ -120,6 +123,8 @@ function App() {
               selectImage={uploadImage}
               setCropData={setCropData}
               onAspectRatio={onAspectRatio}
+              refImg={refImg}
+              setBcgImg={setBcgImg}
             />
           </SCContainerRectangle>
         )}
@@ -145,6 +150,7 @@ function App() {
                       verticalCenter={verticalCenter}
                       positionBlock={positionBlock}
                       aspectRatio={aspectRatio}
+                      bcgImg={bcgImg}
                     />
                   </SCContainerRectangle>
                 </Grid>

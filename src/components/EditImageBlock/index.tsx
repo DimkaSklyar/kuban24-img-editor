@@ -13,6 +13,7 @@ interface IEditImageBlock {
   verticalCenter: boolean;
   positionBlock: boolean;
   aspectRatio: boolean;
+  bcgImg: any;
 }
 
 const EditImageBlock: React.FC<IEditImageBlock> = ({
@@ -27,6 +28,7 @@ const EditImageBlock: React.FC<IEditImageBlock> = ({
   verticalCenter,
   positionBlock,
   aspectRatio,
+  bcgImg,
 }) => {
   const [text, setText] = React.useState("Ваш Текст");
 
@@ -46,10 +48,9 @@ const EditImageBlock: React.FC<IEditImageBlock> = ({
             : "center",
       }}
     >
-      <div
-        className="bg-blur"
-        style={{ background: `url(${selectImage})` }}
-      ></div>
+      <div className="bg-blur">
+        <img src={bcgImg} style={{ height: "100%" }} />
+      </div>
       <img
         src={selectImage}
         alt=""

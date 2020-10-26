@@ -5,11 +5,14 @@ import { Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { AspectRatio, NavigateNext } from "@material-ui/icons";
 import { Link } from "react-router-dom";
+import screenshot from "image-screenshot";
 
 interface ICroppBlock {
   selectImage: string;
   setCropData: Function;
   onAspectRatio: Function;
+  refImg: any;
+  setBcgImg: Function;
 }
 
 const useStyles = makeStyles({
@@ -32,13 +35,24 @@ const CroppBlock: React.FC<ICroppBlock> = ({
   selectImage,
   setCropData,
   onAspectRatio,
+  refImg,
+  setBcgImg,
 }) => {
   const cropperRef = useRef<HTMLImageElement>(null);
   const [cropper, setCropper] = useState<any>();
-
+  const refBcg = React.useRef<any>();
+  const [backgroundImg, setBackgroundImg] = React.useState("");
   const onScreenShot = () => {
     if (typeof cropper !== "undefined") {
       setCropData(cropper.getCroppedCanvas().toDataURL());
+      //какая-то магия которая не работает
+      const img = document.createElement("img");
+      img.setAttribute("src", cropper.getCroppedCanvas().toDataURL());
+      img.style.filter = "blur(14px)";
+      refBcg.current.append(img);
+      screenshot(refBcg.current.querySelector("img")).then((url: any) => {
+        setBcgImg(url);
+      });
     }
   };
 
@@ -57,6 +71,13 @@ const CroppBlock: React.FC<ICroppBlock> = ({
           setCropper(instance);
         }}
       />
+      <div
+        className="preview"
+        ref={refBcg}
+        style={{ height: "0px", overflow: "hidden" }}
+      >
+        <img src={selectImage} alt="" style={{ filter: "blur(14px)" }} />
+      </div>
       <Button
         className={classes.root}
         variant="contained"
