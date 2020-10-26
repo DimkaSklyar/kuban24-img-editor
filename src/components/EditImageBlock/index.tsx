@@ -49,7 +49,7 @@ const EditImageBlock: React.FC<IEditImageBlock> = ({
       }}
     >
       <div className="bg-blur">
-        <img src={bcgImg} style={{ height: "100%" }} />
+        <img src={bcgImg} style={{ height: "105%", width: "105%" }} />
       </div>
       <img
         src={selectImage}

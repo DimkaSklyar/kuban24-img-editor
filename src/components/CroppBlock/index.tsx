@@ -11,7 +11,6 @@ interface ICroppBlock {
   selectImage: string;
   setCropData: Function;
   onAspectRatio: Function;
-  refImg: any;
   setBcgImg: Function;
 }
 
@@ -35,13 +34,11 @@ const CroppBlock: React.FC<ICroppBlock> = ({
   selectImage,
   setCropData,
   onAspectRatio,
-  refImg,
   setBcgImg,
 }) => {
   const cropperRef = useRef<HTMLImageElement>(null);
   const [cropper, setCropper] = useState<any>();
   const refBcg = React.useRef<any>();
-  const [backgroundImg, setBackgroundImg] = React.useState("");
   const onScreenShot = () => {
     if (typeof cropper !== "undefined") {
       setCropData(cropper.getCroppedCanvas().toDataURL());
@@ -76,7 +73,7 @@ const CroppBlock: React.FC<ICroppBlock> = ({
         ref={refBcg}
         style={{ height: "0px", overflow: "hidden" }}
       >
-        <img src={selectImage} alt="" style={{ filter: "blur(14px)" }} />
+        <img src={selectImage} alt="" style={{ filter: "blur(10px)" }} />
       </div>
       <Button
         className={classes.root}

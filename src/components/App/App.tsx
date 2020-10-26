@@ -123,7 +123,6 @@ function App() {
               selectImage={uploadImage}
               setCropData={setCropData}
               onAspectRatio={onAspectRatio}
-              refImg={refImg}
               setBcgImg={setBcgImg}
             />
           </SCContainerRectangle>
