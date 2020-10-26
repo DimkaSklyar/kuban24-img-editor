@@ -28,6 +28,7 @@ export const SCTextArea = styled.textarea<{
   border: 1px solid black;
   font-weight: bold;
   text-transform: uppercase;
+  z-index: 2;
 `;
 
 export const SCText = styled.pre<{
@@ -59,6 +60,7 @@ export const SCText = styled.pre<{
   white-space: pre-wrap;
   font-weight: bold;
   text-transform: uppercase;
+  z-index: 2;
   ${(props) =>
     props.verticalCenter &&
     `display: flex; justify-content: center;

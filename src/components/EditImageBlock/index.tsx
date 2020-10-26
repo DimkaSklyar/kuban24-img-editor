@@ -12,6 +12,7 @@ interface IEditImageBlock {
   refImg: any;
   verticalCenter: boolean;
   positionBlock: boolean;
+  aspectRatio: boolean;
 }
 
 const EditImageBlock: React.FC<IEditImageBlock> = ({
@@ -25,6 +26,7 @@ const EditImageBlock: React.FC<IEditImageBlock> = ({
   refImg,
   verticalCenter,
   positionBlock,
+  aspectRatio,
 }) => {
   const [text, setText] = React.useState("Ваш Текст");
 
@@ -32,8 +34,27 @@ const EditImageBlock: React.FC<IEditImageBlock> = ({
     setText(e.target.value);
   };
   return (
-    <div className="container__wrapper" ref={refImg}>
-      <img src={selectImage} alt="" />
+    <div
+      className="container__wrapper"
+      ref={refImg}
+      style={{
+        alignItems:
+          !aspectRatio && positionBlock
+            ? "flex-start"
+            : !positionBlock
+            ? "flex-end"
+            : "center",
+      }}
+    >
+      <div
+        className="bg-blur"
+        style={{ background: `url(${selectImage})` }}
+      ></div>
+      <img
+        src={selectImage}
+        alt=""
+        style={{ height: !aspectRatio ? "auto" : "100%" }}
+      />
       {onEdit ? (
         <SCTextArea
           fonts={selectedFont}

@@ -3,12 +3,13 @@ import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import { Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { NavigateNext } from "@material-ui/icons";
+import { AspectRatio, NavigateNext } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 
 interface ICroppBlock {
   selectImage: string;
   setCropData: Function;
+  onAspectRatio: Function;
 }
 
 const useStyles = makeStyles({
@@ -20,14 +21,18 @@ const useStyles = makeStyles({
     color: "white",
     height: 48,
     padding: "0 30px",
-    margin: "10px 0 0 0",
+    margin: "10px 0 0 10px",
   },
   editImage: {
     boxShadow: "-2px -2px 20px 9px rgba(0, 0, 0, .23)",
   },
 });
 
-const CroppBlock: React.FC<ICroppBlock> = ({ selectImage, setCropData }) => {
+const CroppBlock: React.FC<ICroppBlock> = ({
+  selectImage,
+  setCropData,
+  onAspectRatio,
+}) => {
   const cropperRef = useRef<HTMLImageElement>(null);
   const [cropper, setCropper] = useState<any>();
 
@@ -44,14 +49,42 @@ const CroppBlock: React.FC<ICroppBlock> = ({ selectImage, setCropData }) => {
         className={classes.editImage}
         src={selectImage}
         style={{ height: 400, width: "100%" }}
-        initialAspectRatio={1 / 1}
         aspectRatio={1 / 1}
         guides={true}
         ref={cropperRef}
+        viewMode={2}
         onInitialized={(instance) => {
           setCropper(instance);
         }}
       />
+      <Button
+        className={classes.root}
+        variant="contained"
+        color="primary"
+        size="large"
+        startIcon={<AspectRatio />}
+        disabled={!selectImage}
+        onClick={() => {
+          cropper.setAspectRatio(1080 / 630);
+          onAspectRatio(false);
+        }}
+      >
+        Прямоугольник
+      </Button>
+      <Button
+        className={classes.root}
+        variant="contained"
+        color="primary"
+        size="large"
+        startIcon={<AspectRatio />}
+        disabled={!selectImage}
+        onClick={() => {
+          cropper.setAspectRatio(1 / 1);
+          onAspectRatio(true);
+        }}
+      >
+        Квадрат
+      </Button>
       <Button
         className={classes.root}
         component={Link}

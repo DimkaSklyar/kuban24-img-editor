@@ -59,7 +59,7 @@ function App() {
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setSelectFont(event.target.value as string);
   };
-
+  const [aspectRatio, setAspectRatio] = React.useState<boolean>(true);
   const refImg: any = React.useRef();
   const classes = useStyles();
 
@@ -95,6 +95,10 @@ function App() {
     setColor(a.bcg);
   };
 
+  const onAspectRatio = (a: boolean) => {
+    setAspectRatio(a);
+  };
+
   return (
     <AppContainerStyle>
       <Route exact path="/">
@@ -112,7 +116,11 @@ function App() {
           <Redirect to="/" />
         ) : (
           <SCContainerRectangle>
-            <CroppBlock selectImage={uploadImage} setCropData={setCropData} />
+            <CroppBlock
+              selectImage={uploadImage}
+              setCropData={setCropData}
+              onAspectRatio={onAspectRatio}
+            />
           </SCContainerRectangle>
         )}
       </Route>
@@ -136,6 +144,7 @@ function App() {
                       refImg={refImg}
                       verticalCenter={verticalCenter}
                       positionBlock={positionBlock}
+                      aspectRatio={aspectRatio}
                     />
                   </SCContainerRectangle>
                 </Grid>
