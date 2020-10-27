@@ -1,9 +1,13 @@
 import React from "react";
 import { SCText, SCTextArea } from "../App/AppStyle";
 
+interface ISettingsState {
+  font: string;
+  fontSize: number | number[];
+}
+
 interface IEditImageBlock {
   selectImage: string;
-  selectedFont: string;
   selectColor: any;
   selectColorText: any;
   selectFontSize: string | number | (string | number)[];
@@ -14,11 +18,12 @@ interface IEditImageBlock {
   positionBlock: boolean;
   aspectRatio: boolean;
   bcgImg: any;
+  settings: ISettingsState;
 }
 
 const EditImageBlock: React.FC<IEditImageBlock> = ({
+  settings,
   selectImage,
-  selectedFont,
   selectColor,
   selectColorText,
   selectFontSize,
@@ -49,7 +54,7 @@ const EditImageBlock: React.FC<IEditImageBlock> = ({
       }}
     >
       <div className="bg-blur">
-        <img src={bcgImg} style={{ height: "105%", width: "105%" }} />
+        <img src={bcgImg} alt="" style={{ height: "105%", width: "105%" }} />
       </div>
       <img
         src={selectImage}
@@ -58,10 +63,10 @@ const EditImageBlock: React.FC<IEditImageBlock> = ({
       />
       {onEdit ? (
         <SCTextArea
-          fonts={selectedFont}
+          fonts={settings.font}
           bcg={selectColor}
           color={selectColorText}
-          fontSize={selectFontSize}
+          fontSize={settings.fontSize}
           textAlign={selectedTextAlign}
           positionBlock={positionBlock}
           verticalAlign={text.split("\n").length}
@@ -82,7 +87,7 @@ const EditImageBlock: React.FC<IEditImageBlock> = ({
         </SCTextArea>
       ) : (
         <SCText
-          fonts={selectedFont}
+          fonts={settings.font}
           bcg={selectColor}
           color={selectColorText}
           fontSize={selectFontSize}

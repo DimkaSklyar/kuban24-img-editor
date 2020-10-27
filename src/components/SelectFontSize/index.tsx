@@ -4,13 +4,9 @@ import Grid from "@material-ui/core/Grid";
 import Slider from "@material-ui/core/Slider";
 import Input from "@material-ui/core/Input";
 import { Typography } from "@material-ui/core";
-
-interface ISelectFontSize {
-  setFontSize: React.Dispatch<
-    React.SetStateAction<string | number | (string | number)[]>
-  >;
-  fontSize: string | number | (string | number)[];
-}
+import { useDispatch, useSelector } from "react-redux";
+import { setSelectFontSize } from "../../redux/actions/settings";
+import { ISettingsState } from "../../types/interfaces";
 
 const useStyles = makeStyles({
   input: {
@@ -18,25 +14,28 @@ const useStyles = makeStyles({
   },
 });
 
-const SelectFontSize: React.FC<ISelectFontSize> = ({
-  setFontSize,
-  fontSize,
-}) => {
+const SelectFontSize = () => {
+  const dispatch = useDispatch();
+  const { fontSize } = useSelector(({ settings }: ISettingsState) => settings);
   const classes = useStyles();
 
   const handleSliderChange = (event: any, newValue: number | number[]) => {
-    setFontSize(newValue);
+    dispatch(setSelectFontSize(newValue));
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFontSize(event.target.value === "" ? "" : Number(event.target.value));
+    dispatch(
+      setSelectFontSize(
+        event.target.value === "" ? 14 : Number(event.target.value)
+      )
+    );
   };
 
   const handleBlur = () => {
     if (fontSize < 14) {
-      setFontSize(14);
+      setSelectFontSize(14);
     } else if (fontSize > 200) {
-      setFontSize(200);
+      setSelectFontSize(200);
     }
   };
 

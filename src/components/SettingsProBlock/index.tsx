@@ -18,16 +18,6 @@ import {
 import SelectOption from "../SelectOption";
 
 interface IPopoverPopupState {
-  onSelectFont:
-    | ((
-        event: React.ChangeEvent<{
-          name?: string | undefined;
-          value: unknown;
-        }>,
-        child: React.ReactNode
-      ) => void)
-    | undefined;
-  selectedFont: string;
   selectColor: any;
   onSelectColor: any;
   onSelectColorText: any;
@@ -45,8 +35,6 @@ interface IPopoverPopupState {
 }
 
 const PopoverPopupState: React.FC<IPopoverPopupState> = ({
-  onSelectFont,
-  selectedFont,
   selectColor,
   onSelectColor,
   onSelectColorText,
@@ -65,6 +53,7 @@ const PopoverPopupState: React.FC<IPopoverPopupState> = ({
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setState(!state);
   };
+
   return (
     <PopupState variant="popover" popupId="demo-popup-popover">
       {(popupState: any) => (
@@ -97,11 +86,8 @@ const PopoverPopupState: React.FC<IPopoverPopupState> = ({
                 inputProps={{ "aria-label": "primary checkbox" }}
               />
               <span>Чудо настройки</span>
-              <SelectFonts
-                onSelectFont={onSelectFont}
-                selectedFont={selectedFont}
-              />
-              <SelectFontSize fontSize={fontSize} setFontSize={setFontSize} />
+              <SelectFonts />
+              <SelectFontSize/>
               <Typography>Позиция</Typography>
               <IconButton
                 color="primary"

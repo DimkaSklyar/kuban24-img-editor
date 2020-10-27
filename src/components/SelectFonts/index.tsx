@@ -3,6 +3,8 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
+import { useDispatch } from "react-redux";
+import { setSelectFont } from "../../redux/actions/settings";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -16,39 +18,32 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-interface IPopoverPopupState {
-  onSelectFont:
-    | ((
-        event: React.ChangeEvent<{
-          name?: string | undefined;
-          value: unknown;
-        }>,
-        child: React.ReactNode
-      ) => void)
-    | undefined;
-  selectedFont: string;
-}
 
-const SelectFonts: React.FC<IPopoverPopupState> = ({
-  onSelectFont,
-  selectedFont,
-}) => {
+
+const SelectFonts = () => {
   const classes = useStyles();
+
+  const dispatch = useDispatch();
+
+  const handleSelectFont = (event: React.ChangeEvent<{ value: unknown }>) => {
+    dispatch(setSelectFont(event.target.value as string));
+  };
+
   return (
     <div>
       <FormControl className={classes.formControl}>
         <Select
-          value={selectedFont}
-          onChange={onSelectFont}
+          value="'Inter', sans-serif"
+          onChange={handleSelectFont}
           displayEmpty
           inputProps={{ "aria-label": "Without label" }}
         >
           <MenuItem value="" disabled>
             <em>Выбор шрифта</em>
           </MenuItem>
-          <MenuItem value={"'Inter', sans-serif"}>Inter</MenuItem>
-          <MenuItem value={"'Consolas'"}>Consolas</MenuItem>
-          <MenuItem value={"'Times New Romans'"}>Times New Romans</MenuItem>
+          <MenuItem value={`'Inter', sans-serif`}>Inter</MenuItem>
+          <MenuItem value={`'Consolas'`}>Consolas</MenuItem>
+          <MenuItem value={`'Times New Romans'`}>Times New Romans</MenuItem>
         </Select>
       </FormControl>
     </div>

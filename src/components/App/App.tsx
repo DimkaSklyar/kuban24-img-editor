@@ -5,7 +5,6 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import html2canvas from "@nidi/html2canvas";
 
-
 import SaveIcon from "@material-ui/icons/Save";
 import { Container, IconButton } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
@@ -21,6 +20,8 @@ import EditImageBlock from "../EditImageBlock";
 import PopoverPopupState from "../SettingsProBlock";
 
 import { Done, Edit } from "@material-ui/icons";
+import { useSelector } from "react-redux";
+import { ISettingsState } from "../../types/interfaces";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -41,13 +42,16 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
+
+
 const arrayTextAlign = ["left", "center", "right"];
 
 function App() {
+  const settings = useSelector(({ settings }: ISettingsState) => settings);
+
   const [files, setFiles] = React.useState<Array<any>>([]);
   const [cropData, setCropData] = React.useState<any>("#");
   const [uploadImage, setUploadImage] = React.useState<any>(undefined);
-  const [selectFont, setSelectFont] = React.useState("");
   const [color, setColor] = React.useState({ r: 255, g: 255, b: 255, a: 1 });
   const [colorText, setColorText] = React.useState({ r: 0, g: 0, b: 0, a: 1 });
   const [fontSize, setFontSize] = React.useState<
@@ -58,9 +62,6 @@ function App() {
   const [verticalCenter, setVerticallCenter] = React.useState(true);
   const [positionBlock, setPositionBlock] = React.useState(true);
   const [bcgImg, setBcgImg] = React.useState<any>("");
-  const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setSelectFont(event.target.value as string);
-  };
   const [aspectRatio, setAspectRatio] = React.useState<boolean>(true);
   const refImg: any = React.useRef();
   const classes = useStyles();
@@ -138,8 +139,8 @@ function App() {
                 <Grid item xs={11}>
                   <SCContainerRectangle>
                     <EditImageBlock
+                      settings={settings}
                       selectImage={cropData}
-                      selectedFont={selectFont}
                       selectColor={color}
                       selectColorText={colorText}
                       selectFontSize={fontSize}
@@ -157,8 +158,6 @@ function App() {
                   <Paper className={classes.settings}>
                     <PopoverPopupState
                       disabled={onEdit}
-                      onSelectFont={handleChange}
-                      selectedFont={selectFont}
                       selectColor={color}
                       onSelectColor={onSelectColor}
                       onSelectColorText={onSelectColorText}
