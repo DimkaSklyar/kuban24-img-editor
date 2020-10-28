@@ -9,8 +9,6 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 
 interface IUploadImageBlock {
   uploadImage: Function;
-  files: any;
-  setFiles: Function;
   selectImage: any;
 }
 
@@ -33,10 +31,10 @@ const useStyles = makeStyles({
 const UploadImageBlock: React.FC<IUploadImageBlock> = ({
   uploadImage,
   selectImage,
-  setFiles,
-  files,
 }) => {
   const classes = useStyles();
+
+  const [files, setFiles] = React.useState<Array<any>>([]);
 
   const handleAdd = (newFiles: any) => {
     newFiles = newFiles.filter(
@@ -63,6 +61,7 @@ const UploadImageBlock: React.FC<IUploadImageBlock> = ({
         dropzoneText={
           "Перетащите сюда изображение или просто нажмите в данной области"
         }
+        filesLimit={1}
         dropzoneClass={classes.uploadImage}
         fileObjects={files}
         onAdd={handleAdd}

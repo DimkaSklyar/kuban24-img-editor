@@ -10,7 +10,6 @@ interface IEditImageBlock {
   selectImage: string;
   selectColor: any;
   selectColorText: any;
-  selectFontSize: string | number | (string | number)[];
   selectedTextAlign: string;
   onEdit: boolean;
   refImg: any;
@@ -26,7 +25,6 @@ const EditImageBlock: React.FC<IEditImageBlock> = ({
   selectImage,
   selectColor,
   selectColorText,
-  selectFontSize,
   selectedTextAlign,
   onEdit,
   refImg,
@@ -66,16 +64,16 @@ const EditImageBlock: React.FC<IEditImageBlock> = ({
           fonts={settings.font}
           bcg={selectColor}
           color={selectColorText}
-          fontSize={settings.fontSize}
           textAlign={selectedTextAlign}
           positionBlock={positionBlock}
           verticalAlign={text.split("\n").length}
           style={{
+            fontSize: `${settings.fontSize}px`,
             borderColor: !onEdit ? "transparent" : "",
             paddingTop: `${
               verticalCenter
                 ? `calc(390px / 2.${text.split("\n").length - 1} - ${
-                    Number(selectFontSize) * 1.05
+                    Number(settings.fontSize) * 1.05
                   }px)`
                 : "0px"
             }`,
@@ -90,11 +88,11 @@ const EditImageBlock: React.FC<IEditImageBlock> = ({
           fonts={settings.font}
           bcg={selectColor}
           color={selectColorText}
-          fontSize={selectFontSize}
           textAlign={selectedTextAlign}
           verticalCenter={verticalCenter}
           positionBlock={positionBlock}
           style={{
+            fontSize: `${settings.fontSize}px`,
             borderColor: !onEdit ? "transparent" : "",
           }}
         >

@@ -72,7 +72,7 @@ const SelectOption: React.FC<IPopoverPopupState> = ({ onSelectColorBcg }) => {
             <em>Выбор Варианта</em>
           </MenuItem>
           {selectOption.map((item: any, index: number) => (
-            <MenuItem value={item}>{`Вариант ${index + 1}`}</MenuItem>
+            <MenuItem key={`Вариант ${index + 1}`} value={item}>{`Вариант ${index + 1}`}</MenuItem>
           ))}
         </Select>
       </FormControl>

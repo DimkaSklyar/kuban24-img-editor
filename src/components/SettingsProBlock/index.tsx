@@ -22,10 +22,6 @@ interface IPopoverPopupState {
   onSelectColor: any;
   onSelectColorText: any;
   colorText: any;
-  setFontSize: React.Dispatch<
-    React.SetStateAction<string | number | (string | number)[]>
-  >;
-  fontSize: string | number | (string | number)[];
   onSelectTextAlign: (i: number) => void;
   disabled: boolean;
   onSelectColorBcg: any;
@@ -39,8 +35,6 @@ const PopoverPopupState: React.FC<IPopoverPopupState> = ({
   onSelectColor,
   onSelectColorText,
   colorText,
-  setFontSize,
-  fontSize,
   onSelectTextAlign,
   disabled,
   onSelectColorBcg,
@@ -87,7 +81,7 @@ const PopoverPopupState: React.FC<IPopoverPopupState> = ({
               />
               <span>Чудо настройки</span>
               <SelectFonts />
-              <SelectFontSize/>
+              <SelectFontSize />
               <Typography>Позиция</Typography>
               <IconButton
                 color="primary"

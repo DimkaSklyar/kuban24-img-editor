@@ -6,7 +6,7 @@ import Grid from "@material-ui/core/Grid";
 import html2canvas from "@nidi/html2canvas";
 
 import SaveIcon from "@material-ui/icons/Save";
-import { Container, IconButton } from "@material-ui/core";
+import { Container, IconButton, Snackbar } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import {
   AppContainerStyle,
@@ -18,10 +18,14 @@ import CroppBlock from "../CroppBlock";
 import UploadImageBlock from "../UploadImageBlock";
 import EditImageBlock from "../EditImageBlock";
 import PopoverPopupState from "../SettingsProBlock";
-
-import { Done, Edit } from "@material-ui/icons";
+import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
+import { Done, Edit, FileCopy } from "@material-ui/icons";
 import { useSelector } from "react-redux";
 import { ISettingsState } from "../../types/interfaces";
+
+function Alert(props: AlertProps) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -43,26 +47,22 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-
 const arrayTextAlign = ["left", "center", "right"];
 
 function App() {
+  const [open, setOpen] = React.useState(false);
   const settings = useSelector(({ settings }: ISettingsState) => settings);
 
-  const [files, setFiles] = React.useState<Array<any>>([]);
   const [cropData, setCropData] = React.useState<any>("#");
   const [uploadImage, setUploadImage] = React.useState<any>(undefined);
   const [color, setColor] = React.useState({ r: 255, g: 255, b: 255, a: 1 });
   const [colorText, setColorText] = React.useState({ r: 0, g: 0, b: 0, a: 1 });
-  const [fontSize, setFontSize] = React.useState<
-    number | string | Array<number | string>
-  >(80);
   const [onEdit, setOnEdit] = React.useState(true);
   const [textAlign, setTextAlign] = React.useState(arrayTextAlign[1]);
   const [verticalCenter, setVerticallCenter] = React.useState(true);
   const [positionBlock, setPositionBlock] = React.useState(true);
   const [bcgImg, setBcgImg] = React.useState<any>("");
-  const [aspectRatio, setAspectRatio] = React.useState<boolean>(true);
+  const [aspectRatio, setAspectRatio] = React.useState<boolean>(false);
   const refImg: any = React.useRef();
   const classes = useStyles();
 
@@ -80,6 +80,27 @@ function App() {
     }).then((canvas) => {
       download(canvas.toDataURL());
     });
+  };
+
+  const onCopyScreenShot = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ): void => {
+    const temp: any = window;
+    html2canvas(refImg.current, {
+      scrollY: -window.pageYOffset,
+      // Странность в 74 пикселя
+      x: 74,
+      windowWidth: refImg.current.scrollWidth,
+      height: 1080,
+      imageTimeout: 2000,
+      allowTaint: true,
+    }).then((canvas) =>
+      canvas.toBlob((blob) =>
+        temp.navigator.clipboard
+          .write([new temp.ClipboardItem({ "image/png": blob })])
+          .then(() => setOpen(true))
+      )
+    );
   };
 
   const onSelectColor = (a: any) => {
@@ -103,6 +124,14 @@ function App() {
     setAspectRatio(a);
   };
 
+  const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
+
   return (
     <AppContainerStyle>
       <Route exact path="/">
@@ -110,8 +139,6 @@ function App() {
           <UploadImageBlock
             uploadImage={setUploadImage}
             selectImage={uploadImage}
-            files={files}
-            setFiles={setFiles}
           />
         </SCConteinerUpload>
       </Route>
@@ -143,7 +170,6 @@ function App() {
                       selectImage={cropData}
                       selectColor={color}
                       selectColorText={colorText}
-                      selectFontSize={fontSize}
                       selectedTextAlign={textAlign}
                       onEdit={onEdit}
                       refImg={refImg}
@@ -162,10 +188,8 @@ function App() {
                       onSelectColor={onSelectColor}
                       onSelectColorText={onSelectColorText}
                       colorText={colorText}
-                      fontSize={fontSize}
                       verticalCenter={verticalCenter}
                       setVerticallCenter={setVerticallCenter}
-                      setFontSize={setFontSize}
                       onSelectTextAlign={onSelectTextAlign}
                       onSelectColorBcg={onSelectColorBcg}
                       setPositionBlock={setPositionBlock}
@@ -184,6 +208,17 @@ function App() {
                   <Paper className={classes.settings}>
                     <IconButton
                       disabled={onEdit}
+                      color="default"
+                      aria-label="copy picture"
+                      component="span"
+                      onClick={onCopyScreenShot}
+                    >
+                      <FileCopy />
+                    </IconButton>
+                  </Paper>
+                  <Paper className={classes.settings}>
+                    <IconButton
+                      disabled={onEdit}
                       color="primary"
                       aria-label="save picture"
                       component="span"
@@ -195,6 +230,11 @@ function App() {
                 </Grid>
               </Grid>
             </div>
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+              <Alert onClose={handleClose} severity="success">
+                Изображение скопированно в буфер обмена
+              </Alert>
+            </Snackbar>
           </Container>
         )}
       </Route>
