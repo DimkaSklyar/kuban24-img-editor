@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const SCTextArea = styled.textarea<{
-  fonts: string;
   bcg: { r: number; g: number; b: number; a: number };
   color: { r: number; g: number; b: number; a: number };
   textAlign: string;
@@ -17,7 +16,6 @@ export const SCTextArea = styled.textarea<{
   width: 100%;
   height: 390px;
   font-family: "Inter";
-  font-family: ${(props) => props.fonts};
   background-color: ${(props) =>
     `rgba(${props.bcg.r},${props.bcg.g},${props.bcg.b},${props.bcg.a})`};
   color: ${(props) =>
@@ -56,7 +54,7 @@ export const SCText = styled.pre<{
   white-space: pre-wrap;
   font-weight: bold;
   text-transform: uppercase;
-  z-index: 2;
+  z-index: 5;
   ${(props) =>
     props.verticalCenter &&
     `display: flex; justify-content: center;
@@ -82,5 +80,5 @@ export const AppContainerStyle = styled.div`
   flex-direction: column;
   height: 100%;
   min-height: 100vh;
-  min-width: 1000px;
+  min-width: 1300px;
 `;

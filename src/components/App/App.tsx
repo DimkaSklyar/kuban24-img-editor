@@ -181,52 +181,54 @@ function App() {
                   </SCContainerRectangle>
                 </Grid>
                 <Grid item xs={1}>
-                  <Paper className={classes.settings}>
-                    <PopoverPopupState
-                      disabled={onEdit}
-                      selectColor={color}
-                      onSelectColor={onSelectColor}
-                      onSelectColorText={onSelectColorText}
-                      colorText={colorText}
-                      verticalCenter={verticalCenter}
-                      setVerticallCenter={setVerticallCenter}
-                      onSelectTextAlign={onSelectTextAlign}
-                      onSelectColorBcg={onSelectColorBcg}
-                      setPositionBlock={setPositionBlock}
-                    />
-                  </Paper>
-                  <Paper className={classes.settings}>
-                    <IconButton
-                      color="secondary"
-                      aria-label="edit"
-                      component="span"
-                      onClick={() => setOnEdit(!onEdit)}
-                    >
-                      {onEdit ? <Done /> : <Edit />}
-                    </IconButton>
-                  </Paper>
-                  <Paper className={classes.settings}>
-                    <IconButton
-                      disabled={onEdit}
-                      color="default"
-                      aria-label="copy picture"
-                      component="span"
-                      onClick={onCopyScreenShot}
-                    >
-                      <FileCopy />
-                    </IconButton>
-                  </Paper>
-                  <Paper className={classes.settings}>
-                    <IconButton
-                      disabled={onEdit}
-                      color="primary"
-                      aria-label="save picture"
-                      component="span"
-                      onClick={onScreenShot}
-                    >
-                      <SaveIcon />
-                    </IconButton>
-                  </Paper>
+                  <div className="sticky-settings">
+                    <Paper className={classes.settings}>
+                      <PopoverPopupState
+                        disabled={onEdit}
+                        selectColor={color}
+                        onSelectColor={onSelectColor}
+                        onSelectColorText={onSelectColorText}
+                        colorText={colorText}
+                        verticalCenter={verticalCenter}
+                        setVerticallCenter={setVerticallCenter}
+                        onSelectTextAlign={onSelectTextAlign}
+                        onSelectColorBcg={onSelectColorBcg}
+                        setPositionBlock={setPositionBlock}
+                      />
+                    </Paper>
+                    <Paper className={classes.settings}>
+                      <IconButton
+                        color="secondary"
+                        aria-label="edit"
+                        component="span"
+                        onClick={() => setOnEdit(!onEdit)}
+                      >
+                        {onEdit ? <Done /> : <Edit />}
+                      </IconButton>
+                    </Paper>
+                    <Paper className={classes.settings}>
+                      <IconButton
+                        disabled={onEdit}
+                        color="default"
+                        aria-label="copy picture"
+                        component="span"
+                        onClick={onCopyScreenShot}
+                      >
+                        <FileCopy />
+                      </IconButton>
+                    </Paper>
+                    <Paper className={classes.settings}>
+                      <IconButton
+                        disabled={onEdit}
+                        color="primary"
+                        aria-label="save picture"
+                        component="span"
+                        onClick={onScreenShot}
+                      >
+                        <SaveIcon />
+                      </IconButton>
+                    </Paper>
+                  </div>
                 </Grid>
               </Grid>
             </div>

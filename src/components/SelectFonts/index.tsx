@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-
+const arrFontFamily: string[] = ["'Inter'", "'Consolas'", "'Times New Romans'"];
 
 const SelectFonts = () => {
   const classes = useStyles();
@@ -33,17 +33,17 @@ const SelectFonts = () => {
     <div>
       <FormControl className={classes.formControl}>
         <Select
-          value="'Inter', sans-serif"
+          value="'Inter'"
           onChange={handleSelectFont}
-          displayEmpty
           inputProps={{ "aria-label": "Without label" }}
         >
           <MenuItem value="" disabled>
             <em>Выбор шрифта</em>
           </MenuItem>
-          <MenuItem value={`'Inter', sans-serif`}>Inter</MenuItem>
-          <MenuItem value={`'Consolas'`}>Consolas</MenuItem>
-          <MenuItem value={`'Times New Romans'`}>Times New Romans</MenuItem>
+          {arrFontFamily &&
+            arrFontFamily.map((item: string) => (
+            <MenuItem key={item} value={`${item}`}>{item.replace(/'/gi,'')}</MenuItem>
+            ))}
         </Select>
       </FormControl>
     </div>

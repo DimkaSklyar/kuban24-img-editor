@@ -61,13 +61,13 @@ const EditImageBlock: React.FC<IEditImageBlock> = ({
       />
       {onEdit ? (
         <SCTextArea
-          fonts={settings.font}
           bcg={selectColor}
           color={selectColorText}
           textAlign={selectedTextAlign}
           positionBlock={positionBlock}
           verticalAlign={text.split("\n").length}
           style={{
+            fontFamily: `${settings.font}, sans-serif`,
             fontSize: `${settings.fontSize}px`,
             borderColor: !onEdit ? "transparent" : "",
             paddingTop: `${
