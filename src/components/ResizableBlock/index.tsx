@@ -1,4 +1,5 @@
 import React from "react";
+// @ts-ignore
 import ResizableRect from "react-resizable-rotatable-draggable";
 
 interface IState {

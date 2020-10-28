@@ -5,6 +5,7 @@ import { Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { AspectRatio, NavigateNext } from "@material-ui/icons";
 import { Link } from "react-router-dom";
+// @ts-ignore
 import screenshot from "image-screenshot";
 
 interface ICroppBlock {
@@ -42,7 +43,7 @@ const CroppBlock: React.FC<ICroppBlock> = ({
   const onScreenShot = () => {
     if (typeof cropper !== "undefined") {
       setCropData(cropper.getCroppedCanvas().toDataURL());
-      //какая-то магия которая не работает
+      //какая-то магия которая работает
       const img = document.createElement("img");
       img.setAttribute("src", cropper.getCroppedCanvas().toDataURL());
       img.style.filter = "blur(14px)";

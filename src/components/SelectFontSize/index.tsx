@@ -16,6 +16,7 @@ const useStyles = makeStyles({
 
 const SelectFontSize = () => {
   const dispatch = useDispatch();
+  //
   const { fontSize } = useSelector(({ settings }: ISettingsState) => settings);
   const classes = useStyles();
 

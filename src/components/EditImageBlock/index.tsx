@@ -1,10 +1,7 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { ISettingsState } from "../../types/interfaces";
 import { SCText, SCTextArea } from "../App/AppStyle";
-
-interface ISettingsState {
-  font: string;
-  fontSize: number | number[];
-}
 
 interface IEditImageBlock {
   selectImage: string;
@@ -17,11 +14,9 @@ interface IEditImageBlock {
   positionBlock: boolean;
   aspectRatio: boolean;
   bcgImg: any;
-  settings: ISettingsState;
 }
 
 const EditImageBlock: React.FC<IEditImageBlock> = ({
-  settings,
   selectImage,
   selectColor,
   selectColorText,
@@ -34,7 +29,7 @@ const EditImageBlock: React.FC<IEditImageBlock> = ({
   bcgImg,
 }) => {
   const [text, setText] = React.useState("Ваш Текст");
-
+  const settings = useSelector(({ settings }: ISettingsState) => settings);
   const handleChange = (e: any) => {
     setText(e.target.value);
   };

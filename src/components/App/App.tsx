@@ -5,7 +5,6 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import html2canvas from "@nidi/html2canvas";
 
-import SaveIcon from "@material-ui/icons/Save";
 import { Container, IconButton, Snackbar } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import {
@@ -13,15 +12,19 @@ import {
   SCContainerRectangle,
   SCConteinerUpload,
 } from "./AppStyle";
-import "react-image-crop/lib/ReactCrop.scss";
-import CroppBlock from "../CroppBlock";
-import UploadImageBlock from "../UploadImageBlock";
-import EditImageBlock from "../EditImageBlock";
-import PopoverPopupState from "../SettingsProBlock";
+
+import {
+  CroppBlock,
+  UploadImageBlock,
+  EditImageBlock,
+  SettingsProBlock,
+} from "..";
+
 import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
-import { Done, Edit, FileCopy } from "@material-ui/icons";
-import { useSelector } from "react-redux";
-import { ISettingsState } from "../../types/interfaces";
+import { Done, Edit, FileCopy, Save as SaveIcon } from "@material-ui/icons";
+
+import "react-image-crop/lib/ReactCrop.scss";
+import { IScreenShotSettings } from "../../types/interfaces";
 
 function Alert(props: AlertProps) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -51,7 +54,6 @@ const arrayTextAlign = ["left", "center", "right"];
 
 function App() {
   const [open, setOpen] = React.useState(false);
-  const settings = useSelector(({ settings }: ISettingsState) => settings);
 
   const [cropData, setCropData] = React.useState<any>("#");
   const [uploadImage, setUploadImage] = React.useState<any>(undefined);
@@ -63,20 +65,25 @@ function App() {
   const [positionBlock, setPositionBlock] = React.useState(true);
   const [bcgImg, setBcgImg] = React.useState<any>("");
   const [aspectRatio, setAspectRatio] = React.useState<boolean>(false);
+
   const refImg: any = React.useRef();
   const classes = useStyles();
+
+  const screenShotSettings: IScreenShotSettings = {
+    scrollY: -window.pageYOffset,
+    // Странность в 74 пикселя
+    x: 74,
+    height: 1080,
+    imageTimeout: 2000,
+    allowTaint: true,
+  };
 
   const onScreenShot = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ): void => {
     html2canvas(refImg.current, {
-      scrollY: -window.pageYOffset,
-      // Странность в 74 пикселя
-      x: 74,
+      ...screenShotSettings,
       windowWidth: refImg.current.scrollWidth,
-      height: 1080,
-      imageTimeout: 2000,
-      allowTaint: true,
     }).then((canvas) => {
       download(canvas.toDataURL());
     });
@@ -87,13 +94,8 @@ function App() {
   ): void => {
     const temp: any = window;
     html2canvas(refImg.current, {
-      scrollY: -window.pageYOffset,
-      // Странность в 74 пикселя
-      x: 74,
+      ...screenShotSettings,
       windowWidth: refImg.current.scrollWidth,
-      height: 1080,
-      imageTimeout: 2000,
-      allowTaint: true,
     }).then((canvas) =>
       canvas.toBlob((blob) =>
         temp.navigator.clipboard
@@ -166,7 +168,6 @@ function App() {
                 <Grid item xs={11}>
                   <SCContainerRectangle>
                     <EditImageBlock
-                      settings={settings}
                       selectImage={cropData}
                       selectColor={color}
                       selectColorText={colorText}
@@ -183,7 +184,7 @@ function App() {
                 <Grid item xs={1}>
                   <div className="sticky-settings">
                     <Paper className={classes.settings}>
-                      <PopoverPopupState
+                      <SettingsProBlock
                         disabled={onEdit}
                         selectColor={color}
                         onSelectColor={onSelectColor}

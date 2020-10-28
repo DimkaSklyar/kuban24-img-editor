@@ -17,7 +17,7 @@ import {
 } from "@material-ui/icons";
 import SelectOption from "../SelectOption";
 
-interface IPopoverPopupState {
+interface SettingsProBlock {
   selectColor: any;
   onSelectColor: any;
   onSelectColorText: any;
@@ -30,7 +30,7 @@ interface IPopoverPopupState {
   setPositionBlock: any;
 }
 
-const PopoverPopupState: React.FC<IPopoverPopupState> = ({
+const SettingsProBlock: React.FC<SettingsProBlock> = ({
   selectColor,
   onSelectColor,
   onSelectColorText,
@@ -159,4 +159,4 @@ const PopoverPopupState: React.FC<IPopoverPopupState> = ({
   );
 };
 
-export default PopoverPopupState;
+export default SettingsProBlock;
