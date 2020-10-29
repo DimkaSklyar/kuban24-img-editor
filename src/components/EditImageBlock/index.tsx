@@ -5,8 +5,6 @@ import { SCText, SCTextArea } from "../App/AppStyle";
 
 interface IEditImageBlock {
   selectImage: string;
-  selectColor: any;
-  selectColorText: any;
   selectedTextAlign: string;
   onEdit: boolean;
   refImg: any;
@@ -18,8 +16,6 @@ interface IEditImageBlock {
 
 const EditImageBlock: React.FC<IEditImageBlock> = ({
   selectImage,
-  selectColor,
-  selectColorText,
   selectedTextAlign,
   onEdit,
   refImg,
@@ -29,7 +25,10 @@ const EditImageBlock: React.FC<IEditImageBlock> = ({
   bcgImg,
 }) => {
   const [text, setText] = React.useState("Ваш Текст");
-  const settings = useSelector(({ settings }: ISettingsState) => settings);
+  const { colorBcg, font, colorText, fontSize } = useSelector(
+    ({ settings }: ISettingsState) => settings
+  );
+  console.log(colorText);
   const handleChange = (e: any) => {
     setText(e.target.value);
   };
@@ -56,19 +55,19 @@ const EditImageBlock: React.FC<IEditImageBlock> = ({
       />
       {onEdit ? (
         <SCTextArea
-          bcg={selectColor}
-          color={selectColorText}
           textAlign={selectedTextAlign}
           positionBlock={positionBlock}
           verticalAlign={text.split("\n").length}
           style={{
-            fontFamily: `${settings.font}, sans-serif`,
-            fontSize: `${settings.fontSize}px`,
+            color: `rgba(${colorText.r},${colorText.g},${colorText.b},${colorText.a})`,
+            backgroundColor: `rgba(${colorBcg.r},${colorBcg.g},${colorBcg.b},${colorBcg.a})`,
+            fontFamily: `${font}, sans-serif`,
+            fontSize: `${fontSize}px`,
             borderColor: !onEdit ? "transparent" : "",
             paddingTop: `${
               verticalCenter
                 ? `calc(390px / 2.${text.split("\n").length - 1} - ${
-                    Number(settings.fontSize) * 1.05
+                    Number(fontSize) * 1.05
                   }px)`
                 : "0px"
             }`,
@@ -80,15 +79,22 @@ const EditImageBlock: React.FC<IEditImageBlock> = ({
         </SCTextArea>
       ) : (
         <SCText
-          fonts={settings.font}
-          bcg={selectColor}
-          color={selectColorText}
           textAlign={selectedTextAlign}
           verticalCenter={verticalCenter}
           positionBlock={positionBlock}
           style={{
-            fontSize: `${settings.fontSize}px`,
+            color: `rgba(${colorText.r},${colorText.g},${colorText.b},${colorText.a})`,
+            backgroundColor: `rgba(${colorBcg.r},${colorBcg.g},${colorBcg.b},${colorBcg.a})`,
+            fontFamily: `${font}, sans-serif`,
+            fontSize: `${fontSize}px`,
             borderColor: !onEdit ? "transparent" : "",
+            paddingTop: `${
+              verticalCenter
+                ? `calc(390px / 2.${text.split("\n").length - 1} - ${
+                    Number(fontSize) * 1.05
+                  }px)`
+                : "0px"
+            }`,
           }}
         >
           {text}

@@ -3,6 +3,9 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
+import { useDispatch } from "react-redux";
+import { setBackgroundColor, setTextColor } from "../../redux/actions/settings";
+import { IColorRGBA } from "../../types/interfaces";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -18,45 +21,48 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const selectOption = [
   {
-    bcg: { r: 255, g: 255, b: 255, a: 1 },
-    textColor: { r: 0, g: 0, b: 0, a: 1 },
+    colorBcg: { r: 255, g: 255, b: 255, a: 1 },
+    colorText: { r: 0, g: 0, b: 0, a: 1 },
   },
   {
-    bcg: { r: 255, g: 87, b: 87, a: 1 },
-    textColor: { r: 255, g: 255, b: 255, a: 1 },
+    colorBcg: { r: 255, g: 87, b: 87, a: 1 },
+    colorText: { r: 255, g: 255, b: 255, a: 1 },
   },
   {
-    bcg: { r: 124, g: 141, b: 87, a: 1 },
-    textColor: { r: 255, g: 255, b: 255, a: 1 },
+    colorBcg: { r: 124, g: 141, b: 87, a: 1 },
+    colorText: { r: 255, g: 255, b: 255, a: 1 },
   },
   {
-    bcg: { r: 255, g: 189, b: 89, a: 1 },
-    textColor: { r: 255, g: 255, b: 255, a: 1 },
+    colorBcg: { r: 255, g: 189, b: 89, a: 1 },
+    colorText: { r: 255, g: 255, b: 255, a: 1 },
   },
   {
-    bcg: { r: 255, g: 189, b: 89, a: 1 },
-    textColor: { r: 0, g: 0, b: 0, a: 1 },
+    colorBcg: { r: 255, g: 189, b: 89, a: 1 },
+    colorText: { r: 0, g: 0, b: 0, a: 1 },
   },
   {
-    bcg: { r: 238, g: 140, b: 58, a: 1 },
-    textColor: { r: 255, g: 255, b: 255, a: 1 },
+    colorBcg: { r: 238, g: 140, b: 58, a: 1 },
+    colorText: { r: 255, g: 255, b: 255, a: 1 },
   },
 ];
-
-interface IPopoverPopupState {
-  onSelectFont?: any;
-  selectedFont?: string;
-  onSelectColorBcg: any;
+interface I {
+  selectedWorkingStep: {
+    colorBcg: IColorRGBA;
+    colorText: IColorRGBA;
+  };
 }
 
-const SelectOption: React.FC<IPopoverPopupState> = ({ onSelectColorBcg }) => {
+const SelectOption = () => {
   const classes = useStyles();
-  const [state, setState] = React.useState({
+  const dispatch = useDispatch();
+
+  const [state, setState] = React.useState<I>({
     selectedWorkingStep: selectOption[0],
   });
   const handleWorkingStepChange = (event: any) => {
-    onSelectColorBcg(event.target.value);
     setState({ selectedWorkingStep: event.target.value });
+    dispatch(setTextColor(event.target.value.colorText));
+    dispatch(setBackgroundColor(event.target.value.colorBcg));
   };
 
   return (
@@ -72,7 +78,9 @@ const SelectOption: React.FC<IPopoverPopupState> = ({ onSelectColorBcg }) => {
             <em>Выбор Варианта</em>
           </MenuItem>
           {selectOption.map((item: any, index: number) => (
-            <MenuItem key={`Вариант ${index + 1}`} value={item}>{`Вариант ${index + 1}`}</MenuItem>
+            <MenuItem key={`Вариант ${index + 1}`} value={item}>{`Вариант ${
+              index + 1
+            }`}</MenuItem>
           ))}
         </Select>
       </FormControl>

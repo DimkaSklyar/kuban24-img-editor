@@ -16,36 +16,42 @@ import {
   VerticalAlignTop,
 } from "@material-ui/icons";
 import SelectOption from "../SelectOption";
+import { useDispatch, useSelector } from "react-redux";
+import { IColorRGBA, ISettingsState } from "../../types/interfaces";
+import { setBackgroundColor } from "../../redux/actions/settings";
 
 interface SettingsProBlock {
-  selectColor: any;
-  onSelectColor: any;
-  onSelectColorText: any;
-  colorText: any;
   onSelectTextAlign: (i: number) => void;
   disabled: boolean;
-  onSelectColorBcg: any;
   verticalCenter: boolean;
   setVerticallCenter: any;
   setPositionBlock: any;
 }
 
 const SettingsProBlock: React.FC<SettingsProBlock> = ({
-  selectColor,
-  onSelectColor,
-  onSelectColorText,
-  colorText,
   onSelectTextAlign,
   disabled,
-  onSelectColorBcg,
   verticalCenter,
   setVerticallCenter,
   setPositionBlock,
 }) => {
   const [state, setState] = React.useState(false);
 
+  const dispatch = useDispatch();
+  const { colorBcg, colorText } = useSelector(
+    ({ settings }: ISettingsState) => settings
+  );
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setState(!state);
+  };
+
+  const handleSelectedColorBcg = (color: IColorRGBA) => {
+    dispatch(setBackgroundColor(color));
+  };
+
+  const handleSelectedColorText = (color: IColorRGBA) => {
+    dispatch(setBackgroundColor(color));
   };
 
   return (
@@ -136,19 +142,19 @@ const SettingsProBlock: React.FC<SettingsProBlock> = ({
                 <React.Fragment>
                   <Typography>Цвет Фона</Typography>
                   <Colorful
-                    selectColor={selectColor}
-                    onSelectColor={onSelectColor}
+                    selectColor={colorBcg}
+                    onSelectedColor={handleSelectedColorBcg}
                   />
                   <Typography>Цвет Текст</Typography>
                   <Colorful
                     selectColor={colorText}
-                    onSelectColor={onSelectColorText}
+                    onSelectedColor={handleSelectedColorText}
                   />
                 </React.Fragment>
               ) : (
                 <React.Fragment>
                   <Typography>Вариант оформления</Typography>
-                  <SelectOption onSelectColorBcg={onSelectColorBcg} />
+                  <SelectOption />
                 </React.Fragment>
               )}
             </Box>

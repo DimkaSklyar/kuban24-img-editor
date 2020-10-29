@@ -1,8 +1,6 @@
 import styled from "styled-components";
 
 export const SCTextArea = styled.textarea<{
-  bcg: { r: number; g: number; b: number; a: number };
-  color: { r: number; g: number; b: number; a: number };
   textAlign: string;
   verticalAlign: any;
   positionBlock: boolean;
@@ -16,10 +14,6 @@ export const SCTextArea = styled.textarea<{
   width: 100%;
   height: 390px;
   font-family: "Inter";
-  background-color: ${(props) =>
-    `rgba(${props.bcg.r},${props.bcg.g},${props.bcg.b},${props.bcg.a})`};
-  color: ${(props) =>
-    `rgba(${props.color.r},${props.color.g},${props.color.b},${props.color.a})`};
   text-align: ${(props) => `${props.textAlign}`};
   border: 1px solid black;
   font-weight: bold;
@@ -28,9 +22,6 @@ export const SCTextArea = styled.textarea<{
 `;
 
 export const SCText = styled.pre<{
-  fonts: string;
-  bcg: { r: number; g: number; b: number; a: number };
-  color: { r: number; g: number; b: number; a: number };
   textAlign: string;
   verticalCenter: boolean;
   positionBlock: boolean;
@@ -44,11 +35,6 @@ export const SCText = styled.pre<{
   width: 100%;
   height: 390px;
   font-family: "Inter";
-  font-family: ${(props) => props.fonts};
-  background-color: ${(props) =>
-    `rgba(${props.bcg.r},${props.bcg.g},${props.bcg.b},${props.bcg.a})`};
-  color: ${(props) =>
-    `rgba(${props.color.r},${props.color.g},${props.color.b},${props.color.a})`};
   text-align: ${(props) => `${props.textAlign}`};
   border: 1px solid black;
   white-space: pre-wrap;

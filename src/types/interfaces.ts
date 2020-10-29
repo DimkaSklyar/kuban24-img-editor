@@ -1,7 +1,16 @@
+export interface IColorRGBA {
+  r: number;
+  g: number;
+  b: number;
+  a: number;
+}
+
 export interface ISettingsState {
   settings: {
     font: string;
     fontSize: number | number[];
+    colorBcg: IColorRGBA;
+    colorText: IColorRGBA;
   };
 }
 

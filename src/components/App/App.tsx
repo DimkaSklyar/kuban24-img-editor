@@ -57,8 +57,7 @@ function App() {
 
   const [cropData, setCropData] = React.useState<any>("#");
   const [uploadImage, setUploadImage] = React.useState<any>(undefined);
-  const [color, setColor] = React.useState({ r: 255, g: 255, b: 255, a: 1 });
-  const [colorText, setColorText] = React.useState({ r: 0, g: 0, b: 0, a: 1 });
+
   const [onEdit, setOnEdit] = React.useState(true);
   const [textAlign, setTextAlign] = React.useState(arrayTextAlign[1]);
   const [verticalCenter, setVerticallCenter] = React.useState(true);
@@ -105,22 +104,10 @@ function App() {
     );
   };
 
-  const onSelectColor = (a: any) => {
-    setColor(a);
-  };
-
   const onSelectTextAlign = (i: number) => {
     setTextAlign(arrayTextAlign[i]);
   };
 
-  const onSelectColorText = (a: any) => {
-    setColorText(a);
-  };
-
-  const onSelectColorBcg = (a: any) => {
-    setColorText(a.textColor);
-    setColor(a.bcg);
-  };
 
   const onAspectRatio = (a: boolean) => {
     setAspectRatio(a);
@@ -169,8 +156,6 @@ function App() {
                   <SCContainerRectangle>
                     <EditImageBlock
                       selectImage={cropData}
-                      selectColor={color}
-                      selectColorText={colorText}
                       selectedTextAlign={textAlign}
                       onEdit={onEdit}
                       refImg={refImg}
@@ -186,14 +171,9 @@ function App() {
                     <Paper className={classes.settings}>
                       <SettingsProBlock
                         disabled={onEdit}
-                        selectColor={color}
-                        onSelectColor={onSelectColor}
-                        onSelectColorText={onSelectColorText}
-                        colorText={colorText}
                         verticalCenter={verticalCenter}
                         setVerticallCenter={setVerticallCenter}
                         onSelectTextAlign={onSelectTextAlign}
-                        onSelectColorBcg={onSelectColorBcg}
                         setPositionBlock={setPositionBlock}
                       />
                     </Paper>
