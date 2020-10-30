@@ -5,8 +5,7 @@ import Slider from "@material-ui/core/Slider";
 import Input from "@material-ui/core/Input";
 import { Typography } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
-import { setSelectFontSize } from "../../redux/actions/settings";
-import { ISettingsState } from "../../types/interfaces";
+import { setSelectFontSize } from "../../redux/actions/fontSize";
 
 const useStyles = makeStyles({
   input: {
@@ -17,7 +16,7 @@ const useStyles = makeStyles({
 const SelectFontSize = () => {
   const dispatch = useDispatch();
   //
-  const { fontSize } = useSelector(({ settings }: ISettingsState) => settings);
+  const { fontSize } = useSelector((font: any) => font.fontSize);
   const classes = useStyles();
 
   const handleSliderChange = (event: any, newValue: number | number[]) => {

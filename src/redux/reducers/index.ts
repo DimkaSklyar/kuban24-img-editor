@@ -1,9 +1,13 @@
 import { combineReducers } from "redux";
 
-import settings from "./settings";
+import color from "./color";
+import font from "./font";
+import fontSize from "./fontSize";
 
 const rootReducer = combineReducers({
-  settings,
+  color,
+  font,
+  fontSize,
 });
 
 export default rootReducer;

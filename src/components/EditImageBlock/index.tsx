@@ -25,13 +25,17 @@ const EditImageBlock: React.FC<IEditImageBlock> = ({
   bcgImg,
 }) => {
   const [text, setText] = React.useState("Ваш Текст");
-  const { colorBcg, font, colorText, fontSize } = useSelector(
-    ({ settings }: ISettingsState) => settings
+
+  const { colorBcg, colorText } = useSelector(
+    ({ color }: ISettingsState) => color
   );
-  console.log(colorText);
+
+  const { font } = useSelector((fonts: any) => fonts.font);
+  const { fontSize } = useSelector((fonts: any) => fonts.fontSize);
   const handleChange = (e: any) => {
     setText(e.target.value);
   };
+
   return (
     <div
       className="container__wrapper"

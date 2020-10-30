@@ -108,7 +108,6 @@ function App() {
     setTextAlign(arrayTextAlign[i]);
   };
 
-
   const onAspectRatio = (a: boolean) => {
     setAspectRatio(a);
   };

@@ -5,7 +5,6 @@ import PopupState, { bindTrigger, bindPopover } from "material-ui-popup-state";
 import SettingsIcon from "@material-ui/icons/Settings";
 import { IconButton, Switch, Typography } from "@material-ui/core";
 import SelectFonts from "../SelectFonts";
-import Colorful from "../Colorful";
 import SelectFontSize from "../SelectFontSize";
 import {
   FormatAlignCenter,
@@ -16,9 +15,7 @@ import {
   VerticalAlignTop,
 } from "@material-ui/icons";
 import SelectOption from "../SelectOption";
-import { useDispatch, useSelector } from "react-redux";
-import { IColorRGBA, ISettingsState } from "../../types/interfaces";
-import { setBackgroundColor, setTextColor } from "../../redux/actions/settings";
+import SelectColorBlock from "../SeletColorBlock";
 
 interface SettingsProBlock {
   onSelectTextAlign: (i: number) => void;
@@ -37,21 +34,8 @@ const SettingsProBlock: React.FC<SettingsProBlock> = ({
 }) => {
   const [state, setState] = React.useState(false);
 
-  const dispatch = useDispatch();
-  const { colorBcg, colorText } = useSelector(
-    ({ settings }: ISettingsState) => settings
-  );
-
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setState(!state);
-  };
-
-  const handleSelectedColorBcg = (color: IColorRGBA) => {
-    dispatch(setBackgroundColor(color));
-  };
-
-  const handleSelectedColorText = (color: IColorRGBA) => {
-    dispatch(setTextColor(color));
   };
 
   return (
@@ -139,18 +123,7 @@ const SettingsProBlock: React.FC<SettingsProBlock> = ({
                 <VerticalAlignCenter />
               </IconButton>
               {state ? (
-                <React.Fragment>
-                  <Typography>Цвет Фона</Typography>
-                  <Colorful
-                    selectColor={colorBcg}
-                    onSelectedColor={handleSelectedColorBcg}
-                  />
-                  <Typography>Цвет Текст</Typography>
-                  <Colorful
-                    selectColor={colorText}
-                    onSelectedColor={handleSelectedColorText}
-                  />
-                </React.Fragment>
+                <SelectColorBlock />
               ) : (
                 <React.Fragment>
                   <Typography>Вариант оформления</Typography>

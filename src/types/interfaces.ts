@@ -6,9 +6,7 @@ export interface IColorRGBA {
 }
 
 export interface ISettingsState {
-  settings: {
-    font: string;
-    fontSize: number | number[];
+  color: {
     colorBcg: IColorRGBA;
     colorText: IColorRGBA;
   };
