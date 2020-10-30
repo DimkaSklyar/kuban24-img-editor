@@ -19,3 +19,13 @@ export const setTextColor = (colorRgba: IColorRGBA) => ({
   type: "SET_COLOR_TEXT_RGBA",
   payload: colorRgba,
 });
+
+export const setTextColorAsync = (colorRgba: IColorRGBA) => (dispatch: any) => {
+  dispatch(setTextColor(colorRgba));
+};
+
+export const setBackgroundColorAsync = (colorRgba: IColorRGBA) => (
+  dispatch: any
+) => {
+  dispatch(setBackgroundColor(colorRgba));
+};

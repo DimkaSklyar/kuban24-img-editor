@@ -18,7 +18,7 @@ import {
 import SelectOption from "../SelectOption";
 import { useDispatch, useSelector } from "react-redux";
 import { IColorRGBA, ISettingsState } from "../../types/interfaces";
-import { setBackgroundColor } from "../../redux/actions/settings";
+import { setBackgroundColor, setTextColor } from "../../redux/actions/settings";
 
 interface SettingsProBlock {
   onSelectTextAlign: (i: number) => void;
@@ -51,7 +51,7 @@ const SettingsProBlock: React.FC<SettingsProBlock> = ({
   };
 
   const handleSelectedColorText = (color: IColorRGBA) => {
-    dispatch(setBackgroundColor(color));
+    dispatch(setTextColor(color));
   };
 
   return (

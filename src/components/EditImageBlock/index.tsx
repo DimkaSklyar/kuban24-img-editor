@@ -88,13 +88,6 @@ const EditImageBlock: React.FC<IEditImageBlock> = ({
             fontFamily: `${font}, sans-serif`,
             fontSize: `${fontSize}px`,
             borderColor: !onEdit ? "transparent" : "",
-            paddingTop: `${
-              verticalCenter
-                ? `calc(390px / 2.${text.split("\n").length - 1} - ${
-                    Number(fontSize) * 1.05
-                  }px)`
-                : "0px"
-            }`,
           }}
         >
           {text}
