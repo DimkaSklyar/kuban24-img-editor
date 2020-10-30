@@ -11,7 +11,7 @@ const fontSize = (fontSize = initialState, action: any) => {
         draftState.fontSize = action.payload;
       });
     default:
-      return initialState;
+      return fontSize;
   }
 };
 export default fontSize;

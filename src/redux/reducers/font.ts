@@ -11,7 +11,7 @@ const font = (font = initialState, action: any) => {
         draftState.font = action.payload;
       });
     default:
-      return initialState;
+      return font;
   }
 };
 export default font;

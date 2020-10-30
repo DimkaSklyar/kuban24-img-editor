@@ -1,4 +1,5 @@
 import React from "react";
+import { SCConteinerUpload } from "../../components/App/AppStyle";
 import { Link } from "react-router-dom";
 
 import { NavigateNext } from "@material-ui/icons";
@@ -6,11 +7,8 @@ import { Button } from "@material-ui/core";
 
 import { DropzoneAreaBase } from "material-ui-dropzone";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-
-interface IUploadImageBlock {
-  uploadImage: Function;
-  selectImage: any;
-}
+import { useDispatch } from "react-redux";
+import { setUploadImage } from "../../redux/actions/image";
 
 const useStyles = makeStyles({
   root: {
@@ -28,10 +26,8 @@ const useStyles = makeStyles({
   },
 });
 
-const UploadImageBlock: React.FC<IUploadImageBlock> = ({
-  uploadImage,
-  selectImage,
-}) => {
+function UploadImage() {
+  const dispatch = useDispatch();
   const classes = useStyles();
 
   const [files, setFiles] = React.useState<Array<any>>([]);
@@ -41,16 +37,15 @@ const UploadImageBlock: React.FC<IUploadImageBlock> = ({
       (file: any) => !files.find((f: any) => f.data === file.data)
     );
     setFiles([...files, ...newFiles]);
-    uploadImage(newFiles[0].data);
+    dispatch(setUploadImage(newFiles[0].data));
   };
 
   const handleDelete = (deleted: any) => {
     setFiles(files.filter((f: any) => f !== deleted));
-    uploadImage(null);
+    dispatch(setUploadImage(null));
   };
-
   return (
-    <React.Fragment>
+    <SCConteinerUpload>
       <DropzoneAreaBase
         getFileAddedMessage={(fileName) =>
           `Изображение ${fileName} успешно добавлено.`
@@ -76,12 +71,12 @@ const UploadImageBlock: React.FC<IUploadImageBlock> = ({
         color="primary"
         size="large"
         endIcon={<NavigateNext />}
-        disabled={!selectImage}
+        disabled={files.length === 0}
       >
         Далее
       </Button>
-    </React.Fragment>
+    </SCConteinerUpload>
   );
-};
+}
 
-export default UploadImageBlock;
+export default UploadImage;

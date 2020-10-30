@@ -17,7 +17,7 @@ const color = (color = initialState, action: any) => {
       });
 
     default:
-      return initialState;
+      return color;
   }
 };
 export default color;

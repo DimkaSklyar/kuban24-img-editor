@@ -7,10 +7,10 @@ import { AspectRatio, NavigateNext } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 // @ts-ignore
 import screenshot from "image-screenshot";
+import { useDispatch, useSelector } from "react-redux";
+import { setCroppData } from "../../redux/actions/image";
 
 interface ICroppBlock {
-  selectImage: string;
-  setCropData: Function;
   onAspectRatio: Function;
   setBcgImg: Function;
 }
@@ -32,17 +32,18 @@ const useStyles = makeStyles({
 });
 
 const CroppBlock: React.FC<ICroppBlock> = ({
-  selectImage,
-  setCropData,
   onAspectRatio,
   setBcgImg,
 }) => {
   const cropperRef = useRef<HTMLImageElement>(null);
   const [cropper, setCropper] = useState<any>();
+  const dispatch = useDispatch();
+  const { uploadImage } = useSelector((images: any) => images.image);
+
   const refBcg = React.useRef<any>();
   const onScreenShot = () => {
     if (typeof cropper !== "undefined") {
-      setCropData(cropper.getCroppedCanvas().toDataURL());
+      dispatch(setCroppData(cropper.getCroppedCanvas().toDataURL()));
       //какая-то магия которая работает
       const img = document.createElement("img");
       img.setAttribute("src", cropper.getCroppedCanvas().toDataURL());
@@ -59,7 +60,7 @@ const CroppBlock: React.FC<ICroppBlock> = ({
     <React.Fragment>
       <Cropper
         className={classes.editImage}
-        src={selectImage}
+        src={uploadImage}
         style={{ height: 400, width: "100%" }}
         aspectRatio={1080 / 630}
         guides={true}
@@ -74,7 +75,7 @@ const CroppBlock: React.FC<ICroppBlock> = ({
         ref={refBcg}
         style={{ height: "0px", overflow: "hidden" }}
       >
-        <img src={selectImage} alt="" style={{ filter: "blur(10px)" }} />
+        <img src={uploadImage} alt="" style={{ filter: "blur(10px)" }} />
       </div>
       <Button
         className={classes.root}
@@ -82,7 +83,7 @@ const CroppBlock: React.FC<ICroppBlock> = ({
         color="primary"
         size="large"
         startIcon={<AspectRatio />}
-        disabled={!selectImage}
+        disabled={!uploadImage}
         onClick={() => {
           cropper.setAspectRatio(1080 / 630);
           onAspectRatio(false);
@@ -96,7 +97,7 @@ const CroppBlock: React.FC<ICroppBlock> = ({
         color="primary"
         size="large"
         startIcon={<AspectRatio />}
-        disabled={!selectImage}
+        disabled={!uploadImage}
         onClick={() => {
           cropper.setAspectRatio(1 / 1);
           onAspectRatio(true);
@@ -112,7 +113,7 @@ const CroppBlock: React.FC<ICroppBlock> = ({
         color="primary"
         size="large"
         endIcon={<NavigateNext />}
-        disabled={!selectImage}
+        disabled={!uploadImage}
         onClick={onScreenShot}
       >
         Далее

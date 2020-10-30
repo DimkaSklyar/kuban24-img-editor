@@ -10,7 +10,6 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import {
   AppContainerStyle,
   SCContainerRectangle,
-  SCConteinerUpload,
 } from "./AppStyle";
 
 import {
@@ -25,6 +24,7 @@ import { Done, Edit, FileCopy, Save as SaveIcon } from "@material-ui/icons";
 
 import "react-image-crop/lib/ReactCrop.scss";
 import { IScreenShotSettings } from "../../types/interfaces";
+import { useSelector } from "react-redux";
 
 function Alert(props: AlertProps) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -54,9 +54,7 @@ const arrayTextAlign = ["left", "center", "right"];
 
 function App() {
   const [open, setOpen] = React.useState(false);
-
-  const [cropData, setCropData] = React.useState<any>("#");
-  const [uploadImage, setUploadImage] = React.useState<any>(undefined);
+  const { uploadImage } = useSelector((images: any) => images.image);
 
   const [onEdit, setOnEdit] = React.useState(true);
   const [textAlign, setTextAlign] = React.useState(arrayTextAlign[1]);
@@ -116,45 +114,32 @@ function App() {
     if (reason === "clickaway") {
       return;
     }
-
     setOpen(false);
   };
 
   return (
     <AppContainerStyle>
-      <Route exact path="/">
-        <SCConteinerUpload>
-          <UploadImageBlock
-            uploadImage={setUploadImage}
-            selectImage={uploadImage}
-          />
-        </SCConteinerUpload>
-      </Route>
+      <Route exact path="/" component={UploadImageBlock} />
       <Route exact path="/step1">
-        {!uploadImage ? (
-          <Redirect to="/" />
-        ) : (
+        {uploadImage ? (
           <SCContainerRectangle>
             <CroppBlock
-              selectImage={uploadImage}
-              setCropData={setCropData}
               onAspectRatio={onAspectRatio}
               setBcgImg={setBcgImg}
             />
           </SCContainerRectangle>
+        ) : (
+          <Redirect to="/" />
         )}
       </Route>
       <Route exact path="/step2">
-        {!uploadImage ? (
-          <Redirect to="/" />
-        ) : (
+        {uploadImage ? (
           <Container maxWidth="lg">
             <div className={classes.root}>
               <Grid container spacing={7}>
                 <Grid item xs={11}>
                   <SCContainerRectangle>
                     <EditImageBlock
-                      selectImage={cropData}
                       selectedTextAlign={textAlign}
                       onEdit={onEdit}
                       refImg={refImg}
@@ -218,6 +203,8 @@ function App() {
               </Alert>
             </Snackbar>
           </Container>
+        ) : (
+          <Redirect to="/" />
         )}
       </Route>
     </AppContainerStyle>

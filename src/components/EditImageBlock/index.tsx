@@ -4,7 +4,6 @@ import { ISettingsState } from "../../types/interfaces";
 import { SCText, SCTextArea } from "../App/AppStyle";
 
 interface IEditImageBlock {
-  selectImage: string;
   selectedTextAlign: string;
   onEdit: boolean;
   refImg: any;
@@ -15,7 +14,6 @@ interface IEditImageBlock {
 }
 
 const EditImageBlock: React.FC<IEditImageBlock> = ({
-  selectImage,
   selectedTextAlign,
   onEdit,
   refImg,
@@ -25,6 +23,8 @@ const EditImageBlock: React.FC<IEditImageBlock> = ({
   bcgImg,
 }) => {
   const [text, setText] = React.useState("Ваш Текст");
+
+  const { croppData } = useSelector((images: any) => images.image);
 
   const { colorBcg, colorText } = useSelector(
     ({ color }: ISettingsState) => color
@@ -53,7 +53,7 @@ const EditImageBlock: React.FC<IEditImageBlock> = ({
         <img src={bcgImg} alt="" style={{ height: "105%", width: "105%" }} />
       </div>
       <img
-        src={selectImage}
+        src={croppData}
         alt=""
         style={{ height: !aspectRatio ? "auto" : "100%" }}
       />
