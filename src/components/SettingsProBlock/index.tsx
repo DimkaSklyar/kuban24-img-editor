@@ -16,26 +16,48 @@ import {
 } from "@material-ui/icons";
 import SelectOption from "../SelectOption";
 import SelectColorBlock from "../SeletColorBlock";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setHorizontalAlign,
+  setVerticalAlign,
+} from "../../redux/actions/alignment";
+import { IAlignment } from "../../types/interfaces";
 
 interface SettingsProBlock {
-  onSelectTextAlign: (i: number) => void;
   disabled: boolean;
-  verticalCenter: boolean;
-  setVerticallCenter: any;
-  setPositionBlock: any;
 }
 
+const arrayTextAlign = {
+  left: <FormatAlignLeft />,
+  center: <FormatAlignCenter />,
+  right: <FormatAlignRight />,
+};
+
 const SettingsProBlock: React.FC<SettingsProBlock> = ({
-  onSelectTextAlign,
   disabled,
-  verticalCenter,
-  setVerticallCenter,
-  setPositionBlock,
 }) => {
+  const dispatch = useDispatch();
+
   const [state, setState] = React.useState(false);
+
+  const { verticalPosition } = useSelector(
+    ({ alignment }: IAlignment) => alignment
+  );
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setState(!state);
+  };
+
+  const handleSelectTextAlign = (align: string) => {
+    dispatch(setHorizontalAlign(align));
+  };
+
+  const handleSelectVerticalAlign = (align: boolean) => {
+    dispatch(setVerticalAlign(align));
+  };
+
+  const handleSelectVerticalPosition = (align: boolean) => {
+    dispatch(setVerticalAlign(align));
   };
 
   return (
@@ -77,7 +99,7 @@ const SettingsProBlock: React.FC<SettingsProBlock> = ({
                 color="primary"
                 aria-label="position bottom"
                 component="span"
-                onClick={() => setPositionBlock(true)}
+                onClick={() => handleSelectVerticalAlign(false)}
               >
                 <VerticalAlignBottom />
               </IconButton>
@@ -85,40 +107,28 @@ const SettingsProBlock: React.FC<SettingsProBlock> = ({
                 color="primary"
                 aria-label="position top"
                 component="span"
-                onClick={() => setPositionBlock(false)}
+                onClick={() => handleSelectVerticalAlign(true)}
               >
                 <VerticalAlignTop />
               </IconButton>
               <Typography>Выравнивание</Typography>
-              <IconButton
-                color="primary"
-                aria-label="align left"
-                component="span"
-                onClick={() => onSelectTextAlign(0)}
-              >
-                <FormatAlignLeft />
-              </IconButton>
-              <IconButton
-                color="primary"
-                aria-label="align center"
-                component="span"
-                onClick={() => onSelectTextAlign(1)}
-              >
-                <FormatAlignCenter />
-              </IconButton>
-              <IconButton
-                color="primary"
-                aria-label="align right"
-                component="span"
-                onClick={() => onSelectTextAlign(2)}
-              >
-                <FormatAlignRight />
-              </IconButton>
+              {arrayTextAlign &&
+                Object.keys(arrayTextAlign).map((item: string) => (
+                  <IconButton
+                    key={item}
+                    color="primary"
+                    aria-label={`align ${item}`}
+                    component="span"
+                    onClick={() => handleSelectTextAlign(item)}
+                  >
+                    {(arrayTextAlign as any)[item]}
+                  </IconButton>
+                ))}
               <IconButton
                 color="primary"
                 aria-label="align center"
                 component="span"
-                onClick={() => setVerticallCenter(!verticalCenter)}
+                onClick={() => handleSelectVerticalPosition(!verticalPosition)}
               >
                 <VerticalAlignCenter />
               </IconButton>

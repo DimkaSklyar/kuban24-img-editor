@@ -1,37 +1,33 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { ISettingsState } from "../../types/interfaces";
+import { IAlignment, ISettingsState } from "../../types/interfaces";
 import { SCText, SCTextArea } from "../App/AppStyle";
 
 interface IEditImageBlock {
-  selectedTextAlign: string;
   onEdit: boolean;
   refImg: any;
-  verticalCenter: boolean;
-  positionBlock: boolean;
   aspectRatio: boolean;
   bcgImg: any;
 }
 
 const EditImageBlock: React.FC<IEditImageBlock> = ({
-  selectedTextAlign,
   onEdit,
   refImg,
-  verticalCenter,
-  positionBlock,
   aspectRatio,
   bcgImg,
 }) => {
   const [text, setText] = React.useState("Ваш Текст");
 
   const { croppData } = useSelector((images: any) => images.image);
-
   const { colorBcg, colorText } = useSelector(
     ({ color }: ISettingsState) => color
   );
-
+  const { horizontalAlign, verticalAlign, verticalPosition } = useSelector(
+    ({ alignment }: IAlignment) => alignment
+  );
   const { font } = useSelector((fonts: any) => fonts.font);
   const { fontSize } = useSelector((fonts: any) => fonts.fontSize);
+
   const handleChange = (e: any) => {
     setText(e.target.value);
   };
@@ -42,9 +38,9 @@ const EditImageBlock: React.FC<IEditImageBlock> = ({
       ref={refImg}
       style={{
         alignItems:
-          !aspectRatio && positionBlock
+          !aspectRatio && !verticalAlign
             ? "flex-start"
-            : !positionBlock
+            : verticalAlign
             ? "flex-end"
             : "center",
       }}
@@ -59,17 +55,17 @@ const EditImageBlock: React.FC<IEditImageBlock> = ({
       />
       {onEdit ? (
         <SCTextArea
-          textAlign={selectedTextAlign}
-          positionBlock={positionBlock}
-          verticalAlign={text.split("\n").length}
           style={{
+            top: verticalAlign ? "60px" : "",
+            bottom: !verticalAlign ? "60px" : "",
+            textAlign: horizontalAlign,
             color: `rgba(${colorText.r},${colorText.g},${colorText.b},${colorText.a})`,
             backgroundColor: `rgba(${colorBcg.r},${colorBcg.g},${colorBcg.b},${colorBcg.a})`,
             fontFamily: `${font}, sans-serif`,
             fontSize: `${fontSize}px`,
             borderColor: !onEdit ? "transparent" : "",
             paddingTop: `${
-              verticalCenter
+              verticalPosition
                 ? `calc(390px / 2.${text.split("\n").length - 1} - ${
                     Number(fontSize) * 1.05
                   }px)`
@@ -83,10 +79,11 @@ const EditImageBlock: React.FC<IEditImageBlock> = ({
         </SCTextArea>
       ) : (
         <SCText
-          textAlign={selectedTextAlign}
-          verticalCenter={verticalCenter}
-          positionBlock={positionBlock}
+          verticalPosition
           style={{
+            top: verticalAlign ? "60px" : "",
+            bottom: !verticalAlign ? "60px" : "",
+            textAlign: horizontalAlign,
             color: `rgba(${colorText.r},${colorText.g},${colorText.b},${colorText.a})`,
             backgroundColor: `rgba(${colorBcg.r},${colorBcg.g},${colorBcg.b},${colorBcg.a})`,
             fontFamily: `${font}, sans-serif`,

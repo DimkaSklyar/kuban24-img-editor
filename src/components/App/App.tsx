@@ -7,10 +7,7 @@ import html2canvas from "@nidi/html2canvas";
 
 import { Container, IconButton, Snackbar } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import {
-  AppContainerStyle,
-  SCContainerRectangle,
-} from "./AppStyle";
+import { AppContainerStyle, SCContainerRectangle } from "./AppStyle";
 
 import {
   CroppBlock,
@@ -50,16 +47,11 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const arrayTextAlign = ["left", "center", "right"];
-
 function App() {
   const [open, setOpen] = React.useState(false);
   const { uploadImage } = useSelector((images: any) => images.image);
 
   const [onEdit, setOnEdit] = React.useState(true);
-  const [textAlign, setTextAlign] = React.useState(arrayTextAlign[1]);
-  const [verticalCenter, setVerticallCenter] = React.useState(true);
-  const [positionBlock, setPositionBlock] = React.useState(true);
   const [bcgImg, setBcgImg] = React.useState<any>("");
   const [aspectRatio, setAspectRatio] = React.useState<boolean>(false);
 
@@ -102,10 +94,6 @@ function App() {
     );
   };
 
-  const onSelectTextAlign = (i: number) => {
-    setTextAlign(arrayTextAlign[i]);
-  };
-
   const onAspectRatio = (a: boolean) => {
     setAspectRatio(a);
   };
@@ -123,10 +111,7 @@ function App() {
       <Route exact path="/step1">
         {uploadImage ? (
           <SCContainerRectangle>
-            <CroppBlock
-              onAspectRatio={onAspectRatio}
-              setBcgImg={setBcgImg}
-            />
+            <CroppBlock onAspectRatio={onAspectRatio} setBcgImg={setBcgImg} />
           </SCContainerRectangle>
         ) : (
           <Redirect to="/" />
@@ -140,11 +125,8 @@ function App() {
                 <Grid item xs={11}>
                   <SCContainerRectangle>
                     <EditImageBlock
-                      selectedTextAlign={textAlign}
                       onEdit={onEdit}
                       refImg={refImg}
-                      verticalCenter={verticalCenter}
-                      positionBlock={positionBlock}
                       aspectRatio={aspectRatio}
                       bcgImg={bcgImg}
                     />
@@ -153,13 +135,7 @@ function App() {
                 <Grid item xs={1}>
                   <div className="sticky-settings">
                     <Paper className={classes.settings}>
-                      <SettingsProBlock
-                        disabled={onEdit}
-                        verticalCenter={verticalCenter}
-                        setVerticallCenter={setVerticallCenter}
-                        onSelectTextAlign={onSelectTextAlign}
-                        setPositionBlock={setPositionBlock}
-                      />
+                      <SettingsProBlock disabled={onEdit} />
                     </Paper>
                     <Paper className={classes.settings}>
                       <IconButton

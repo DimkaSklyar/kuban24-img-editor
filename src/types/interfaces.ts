@@ -12,6 +12,20 @@ export interface ISettingsState {
   };
 }
 
+enum ITextAlign {
+  center = "center",
+  left = "left",
+  right = "right",
+}
+
+export interface IAlignment {
+  alignment: {
+    horizontalAlign: ITextAlign;
+    verticalAlign: boolean;
+    verticalPosition: boolean;
+  };
+}
+
 export interface IScreenShotSettings {
   scrollY: number;
   x: number;
