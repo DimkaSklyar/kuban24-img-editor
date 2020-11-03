@@ -6,22 +6,16 @@ import { SCText, SCTextArea } from "../App/AppStyle";
 interface IEditImageBlock {
   onEdit: boolean;
   refImg: any;
-  aspectRatio: boolean;
-  bcgImg: any;
 }
 
-const EditImageBlock: React.FC<IEditImageBlock> = ({
-  onEdit,
-  refImg,
-  aspectRatio,
-  bcgImg,
-}) => {
+const EditImageBlock: React.FC<IEditImageBlock> = ({ onEdit, refImg }) => {
   const [text, setText] = React.useState("Ваш Текст");
 
-  const { croppData } = useSelector((images: any) => images.image);
+  const { croppData, blurImage } = useSelector((images: any) => images.image);
   const { colorBcg, colorText } = useSelector(
     ({ color }: ISettingsState) => color
   );
+  const { aspectRatio } = useSelector((ratio: any) => ratio.aspectRatio);
   const { horizontalAlign, verticalAlign, verticalPosition } = useSelector(
     ({ alignment }: IAlignment) => alignment
   );
@@ -46,7 +40,7 @@ const EditImageBlock: React.FC<IEditImageBlock> = ({
       }}
     >
       <div className="bg-blur">
-        <img src={bcgImg} alt="" style={{ height: "105%", width: "105%" }} />
+        <img src={blurImage} alt="" style={{ height: "105%", width: "105%" }} />
       </div>
       <img
         src={croppData}

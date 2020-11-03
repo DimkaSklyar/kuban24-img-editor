@@ -8,12 +8,9 @@ import { Link } from "react-router-dom";
 // @ts-ignore
 import screenshot from "image-screenshot";
 import { useDispatch, useSelector } from "react-redux";
-import { setCroppData } from "../../redux/actions/image";
-
-interface ICroppBlock {
-  onAspectRatio: Function;
-  setBcgImg: Function;
-}
+import { setBlurImage, setCroppData } from "../../redux/actions/image";
+import { setAspectRatio } from "../../redux/actions/aspectRatio";
+import { SCContainerRectangle } from "../App/AppStyle";
 
 const useStyles = makeStyles({
   root: {
@@ -31,16 +28,14 @@ const useStyles = makeStyles({
   },
 });
 
-const CroppBlock: React.FC<ICroppBlock> = ({
-  onAspectRatio,
-  setBcgImg,
-}) => {
+const CroppBlock = () => {
   const cropperRef = useRef<HTMLImageElement>(null);
   const [cropper, setCropper] = useState<any>();
   const dispatch = useDispatch();
   const { uploadImage } = useSelector((images: any) => images.image);
 
   const refBcg = React.useRef<any>();
+
   const onScreenShot = () => {
     if (typeof cropper !== "undefined") {
       dispatch(setCroppData(cropper.getCroppedCanvas().toDataURL()));
@@ -50,14 +45,18 @@ const CroppBlock: React.FC<ICroppBlock> = ({
       img.style.filter = "blur(14px)";
       refBcg.current.append(img);
       screenshot(refBcg.current.querySelector("img")).then((url: any) => {
-        setBcgImg(url);
+        dispatch(setBlurImage(url));
       });
     }
   };
 
+  const handleAspectRatio = (a: boolean) => {
+    dispatch(setAspectRatio(a));
+  };
+
   const classes = useStyles();
   return (
-    <React.Fragment>
+    <SCContainerRectangle>
       <Cropper
         className={classes.editImage}
         src={uploadImage}
@@ -86,7 +85,7 @@ const CroppBlock: React.FC<ICroppBlock> = ({
         disabled={!uploadImage}
         onClick={() => {
           cropper.setAspectRatio(1080 / 630);
-          onAspectRatio(false);
+          handleAspectRatio(false);
         }}
       >
         Прямоугольник
@@ -100,7 +99,7 @@ const CroppBlock: React.FC<ICroppBlock> = ({
         disabled={!uploadImage}
         onClick={() => {
           cropper.setAspectRatio(1 / 1);
-          onAspectRatio(true);
+          handleAspectRatio(true);
         }}
       >
         Квадрат
@@ -118,7 +117,7 @@ const CroppBlock: React.FC<ICroppBlock> = ({
       >
         Далее
       </Button>
-    </React.Fragment>
+    </SCContainerRectangle>
   );
 };
 
