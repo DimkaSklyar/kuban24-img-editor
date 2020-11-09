@@ -3,7 +3,7 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setSelectFont } from "../../redux/actions/font";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -18,13 +18,13 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const arrFontFamily: string[] = ["'Inter'", "'Consolas'", "'Times New Romans'"];
+const arrFontFamily: string[] = ["Inter", "Consolas", "Times New Romans"];
 
 const SelectFonts = () => {
   const classes = useStyles();
 
   const dispatch = useDispatch();
-
+  const font = useSelector((setting: any) => setting.font);
   const handleSelectFont = (event: React.ChangeEvent<{ value: unknown }>) => {
     dispatch(setSelectFont(event.target.value as string));
   };
@@ -33,7 +33,7 @@ const SelectFonts = () => {
     <div>
       <FormControl className={classes.formControl}>
         <Select
-          value="'Inter'"
+          value={`${font}`}
           onChange={handleSelectFont}
           inputProps={{ "aria-label": "Without label" }}
         >
@@ -42,7 +42,9 @@ const SelectFonts = () => {
           </MenuItem>
           {arrFontFamily &&
             arrFontFamily.map((item: string) => (
-            <MenuItem key={item} value={`${item}`}>{item.replace(/'/gi,'')}</MenuItem>
+              <MenuItem key={item} value={`${item}`}>
+                {item.replace(/'/gi, "")}
+              </MenuItem>
             ))}
         </Select>
       </FormControl>

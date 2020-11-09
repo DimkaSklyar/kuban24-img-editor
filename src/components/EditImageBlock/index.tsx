@@ -1,6 +1,5 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { IAlignment, ISettingsState } from "../../types/interfaces";
 import { SCText, SCTextArea } from "../App/AppStyle";
 
 interface IEditImageBlock {
@@ -11,16 +10,8 @@ interface IEditImageBlock {
 const EditImageBlock: React.FC<IEditImageBlock> = ({ onEdit, refImg }) => {
   const [text, setText] = React.useState("Ваш Текст");
 
+  const settings = useSelector((setting: any) => setting);
   const { croppData, blurImage } = useSelector((images: any) => images.image);
-  const { colorBcg, colorText } = useSelector(
-    ({ color }: ISettingsState) => color
-  );
-  const { aspectRatio } = useSelector((ratio: any) => ratio.aspectRatio);
-  const { horizontalAlign, verticalAlign, verticalPosition } = useSelector(
-    ({ alignment }: IAlignment) => alignment
-  );
-  const { font } = useSelector((fonts: any) => fonts.font);
-  const { fontSize } = useSelector((fonts: any) => fonts.fontSize);
 
   const handleChange = (e: any) => {
     setText(e.target.value);
@@ -32,9 +23,9 @@ const EditImageBlock: React.FC<IEditImageBlock> = ({ onEdit, refImg }) => {
       ref={refImg}
       style={{
         alignItems:
-          !aspectRatio && !verticalAlign
+          !settings.aspectRatio && !settings.verticalAlign
             ? "flex-start"
-            : verticalAlign
+            : settings.verticalAlign
             ? "flex-end"
             : "center",
       }}
@@ -45,46 +36,19 @@ const EditImageBlock: React.FC<IEditImageBlock> = ({ onEdit, refImg }) => {
       <img
         src={croppData}
         alt=""
-        style={{ height: !aspectRatio ? "auto" : "100%" }}
+        style={{ height: !settings.aspectRatio ? "auto" : "100%" }}
       />
       {onEdit ? (
         <SCTextArea
-          style={{
-            top: verticalAlign ? "60px" : "",
-            bottom: !verticalAlign ? "60px" : "",
-            textAlign: horizontalAlign,
-            color: `rgba(${colorText.r},${colorText.g},${colorText.b},${colorText.a})`,
-            backgroundColor: `rgba(${colorBcg.r},${colorBcg.g},${colorBcg.b},${colorBcg.a})`,
-            fontFamily: `${font}, sans-serif`,
-            fontSize: `${fontSize}px`,
-            borderColor: !onEdit ? "transparent" : "",
-            paddingTop: `${
-              verticalPosition
-                ? `calc(390px / 2.${text.split("\n").length - 1} - ${
-                    Number(fontSize) * 1.05
-                  }px)`
-                : "0px"
-            }`,
-          }}
+          {...settings}
+          countString={text.split("\n").length - 1}
           value={text}
           onChange={handleChange}
         >
           {text}
         </SCTextArea>
       ) : (
-        <SCText
-          verticalPosition
-          style={{
-            top: verticalAlign ? "60px" : "",
-            bottom: !verticalAlign ? "60px" : "",
-            textAlign: horizontalAlign,
-            color: `rgba(${colorText.r},${colorText.g},${colorText.b},${colorText.a})`,
-            backgroundColor: `rgba(${colorBcg.r},${colorBcg.g},${colorBcg.b},${colorBcg.a})`,
-            fontFamily: `${font}, sans-serif`,
-            fontSize: `${fontSize}px`,
-            borderColor: !onEdit ? "transparent" : "",
-          }}
-        >
+        <SCText {...settings} verticalPosition>
           {text}
         </SCText>
       )}

@@ -15,11 +15,12 @@ const useStyles = makeStyles({
 
 const SelectFontSize = () => {
   const dispatch = useDispatch();
-  //
-  const { fontSize } = useSelector((font: any) => font.fontSize);
+  
+  const fontSize = useSelector((settings: any) => settings.fontSize);
   const classes = useStyles();
 
   const handleSliderChange = (event: any, newValue: number | number[]) => {
+    console.log(newValue);
     dispatch(setSelectFontSize(newValue));
   };
 

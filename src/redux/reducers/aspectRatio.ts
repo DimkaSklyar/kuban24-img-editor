@@ -1,15 +1,14 @@
 import produce from "immer";
 
-const initialState = {
-  aspectRatio: false,
-};
+const initialState = false;
 
 const aspectRatio = (aspectRatio = initialState, action: any) => {
   switch (action.type) {
     case "SET_ASPECT_RATIO":
-      return produce(aspectRatio, (draftState) => {
-        draftState.aspectRatio = action.payload;
-      });
+      return produce(
+        aspectRatio,
+        (draftState) => (draftState = action.payload)
+      );
     default:
       return aspectRatio;
   }

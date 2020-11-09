@@ -1,6 +1,17 @@
 import styled from "styled-components";
+import { IColorRGBA } from "../../types/interfaces";
 
-export const SCTextArea = styled.textarea`
+export const SCTextArea = styled.textarea<{
+  color: {
+    colorBcg: IColorRGBA;
+    colorText: IColorRGBA;
+  };
+  font: string;
+  fontSize: number | number[];
+  aspectRation: boolean;
+  alignment: any;
+  countString: number;
+}>`
   resize: none;
   position: absolute;
   right: 0;
@@ -12,10 +23,36 @@ export const SCTextArea = styled.textarea`
   font-weight: bold;
   text-transform: uppercase;
   z-index: 2;
+  ${({ font, fontSize, color, alignment, countString }) =>
+    `font-family: ${font}, sans-serif;
+    font-size: ${fontSize}px;
+    background-color: rgba(${color.colorBcg.r},${color.colorBcg.g},${
+      color.colorBcg.b
+    },${color.colorBcg.a});
+    color: rgba(${color.colorText.r},${color.colorText.g},${
+      color.colorText.b
+    },${color.colorText.a});
+    top: ${alignment.verticalAlign ? "60px" : ""};
+    bottom: ${!alignment.verticalAlign ? "60px" : ""};
+    text-align: ${alignment.horizontalAlign};
+    padding-top: ${
+      alignment.verticalPosition
+        ? `calc(390px / 2.${countString} - ${Number(fontSize) * 1.05}px)`
+        : "0px"
+    }
+    `}
 `;
 
 export const SCText = styled.pre<{
   verticalPosition: boolean;
+  color: {
+    colorBcg: IColorRGBA;
+    colorText: IColorRGBA;
+  };
+  font: string;
+  fontSize: number | number[];
+  aspectRation: boolean;
+  alignment: any;
 }>`
   resize: none;
   position: absolute;
@@ -24,15 +61,26 @@ export const SCText = styled.pre<{
   width: 100%;
   height: 390px;
   font-family: "Inter";
-  border: 1px solid black;
   white-space: pre-wrap;
   font-weight: bold;
   text-transform: uppercase;
   z-index: 5;
-  ${(props) =>
-    props.verticalPosition &&
+  ${({ font, fontSize, color, alignment, verticalPosition }) =>
+    verticalPosition &&
     `display: flex; justify-content: center;
-  align-items: center;`}
+    align-items: center;
+    top: ${alignment.verticalAlign ? "60px" : ""};
+    bottom: ${!alignment.verticalAlign ? "60px" : ""};
+    text-align: ${alignment.horizontalAlign};
+    background-color: rgba(${color.colorBcg.r},${color.colorBcg.g},${
+      color.colorBcg.b
+    },${color.colorBcg.a});
+    color: rgba(${color.colorText.r},${color.colorText.g},${
+      color.colorText.b
+    },${color.colorText.a});
+    font-family: ${font}, sans-serif;
+    font-size: ${fontSize}px;
+    `}
 `;
 
 export const SCConteinerUpload = styled.div`

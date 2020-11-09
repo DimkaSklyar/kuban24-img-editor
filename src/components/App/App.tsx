@@ -10,8 +10,7 @@ import Editor from "../../pages/Editor";
 
 function App() {
   const { uploadImage } = useSelector((images: any) => images.image);
-  const settings = useSelector((settings: any) => settings);
-  console.log(settings);
+
   return (
     <AppContainerStyle>
       <Route exact path="/" component={UploadImageBlock} />
