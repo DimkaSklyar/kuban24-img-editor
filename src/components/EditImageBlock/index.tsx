@@ -23,9 +23,9 @@ const EditImageBlock: React.FC<IEditImageBlock> = ({ onEdit, refImg }) => {
       ref={refImg}
       style={{
         alignItems:
-          !settings.aspectRatio && !settings.verticalAlign
+          !settings.aspectRatio && !settings.alignment.verticalAlign
             ? "flex-start"
-            : settings.verticalAlign
+            : settings.alignment.verticalAlign
             ? "flex-end"
             : "center",
       }}
