@@ -20,6 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   setHorizontalAlign,
   setVerticalAlign,
+  setVerticalPosition,
 } from "../../redux/actions/alignment";
 import { IAlignment } from "../../types/interfaces";
 
@@ -33,9 +34,7 @@ const arrayTextAlign = {
   right: <FormatAlignRight />,
 };
 
-const SettingsProBlock: React.FC<SettingsProBlock> = ({
-  disabled,
-}) => {
+const SettingsProBlock: React.FC<SettingsProBlock> = ({ disabled }) => {
   const dispatch = useDispatch();
 
   const [state, setState] = React.useState(false);
@@ -57,7 +56,7 @@ const SettingsProBlock: React.FC<SettingsProBlock> = ({
   };
 
   const handleSelectVerticalPosition = (align: boolean) => {
-    dispatch(setVerticalAlign(align));
+    dispatch(setVerticalPosition(align));
   };
 
   return (
