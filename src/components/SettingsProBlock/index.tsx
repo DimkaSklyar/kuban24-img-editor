@@ -22,7 +22,9 @@ import {
   setVerticalAlign,
   setVerticalPosition,
 } from "../../redux/actions/alignment";
+import { setShowLogo } from "../../redux/actions/logo";
 import { IAlignment } from "../../types/interfaces";
+import SelectTypeLogo from "../SelectTypeLogo";
 
 interface SettingsProBlock {
   disabled: boolean;
@@ -38,6 +40,7 @@ const SettingsProBlock: React.FC<SettingsProBlock> = ({ disabled }) => {
   const dispatch = useDispatch();
 
   const [state, setState] = React.useState(false);
+  const [logo, setLogo] = React.useState(false);
 
   const { verticalPosition } = useSelector(
     ({ alignment }: IAlignment) => alignment
@@ -45,6 +48,11 @@ const SettingsProBlock: React.FC<SettingsProBlock> = ({ disabled }) => {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setState(!state);
+  };
+
+  const handleChangeShowLogo = (event: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(setShowLogo(!logo));
+    setLogo(!logo);
   };
 
   const handleSelectTextAlign = (align: string) => {
@@ -131,6 +139,22 @@ const SettingsProBlock: React.FC<SettingsProBlock> = ({ disabled }) => {
               >
                 <VerticalAlignCenter />
               </IconButton>
+              <div>
+                <Switch
+                  checked={logo}
+                  onChange={handleChangeShowLogo}
+                  color="primary"
+                  name="checkedB"
+                  inputProps={{ "aria-label": "primary checkbox" }}
+                />
+                <span>Логотип</span>
+              </div>
+              {logo && (
+                <React.Fragment>
+                  <Typography>Тип логотипа</Typography>
+                  <SelectTypeLogo />
+                </React.Fragment>
+              )}
               {state ? (
                 <SelectColorBlock />
               ) : (

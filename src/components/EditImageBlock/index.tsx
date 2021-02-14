@@ -1,7 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { SCText, SCTextArea } from "../App/AppStyle";
-
 interface IEditImageBlock {
   onEdit: boolean;
   refImg: any;
@@ -38,6 +37,9 @@ const EditImageBlock: React.FC<IEditImageBlock> = ({ onEdit, refImg }) => {
         alt=""
         style={{ height: !settings.aspectRatio ? "auto" : "100%" }}
       />
+      {settings.logo.showLogo && (
+        <img src={settings.logo.typeLogo} alt="logo" className="logo" />
+      )}
       {onEdit ? (
         <SCTextArea
           {...settings}

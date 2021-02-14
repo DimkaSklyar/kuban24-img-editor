@@ -6,6 +6,7 @@ import fontSize from "./fontSize";
 import image from "./image";
 import alignment from "./alignment";
 import aspectRatio from "./aspectRatio";
+import logo from "./logo";
 
 const rootReducer = combineReducers({
   color,
@@ -13,7 +14,8 @@ const rootReducer = combineReducers({
   fontSize,
   image,
   alignment,
-  aspectRatio
+  aspectRatio,
+  logo,
 });
 
 export default rootReducer;

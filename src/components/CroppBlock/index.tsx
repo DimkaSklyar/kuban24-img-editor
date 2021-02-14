@@ -61,7 +61,7 @@ const CroppBlock = () => {
         className={classes.editImage}
         src={uploadImage}
         style={{ height: 400, width: "100%" }}
-        aspectRatio={1080 / 630}
+        aspectRatio={1080 / 690}
         guides={true}
         ref={cropperRef}
         viewMode={2}
@@ -84,7 +84,7 @@ const CroppBlock = () => {
         startIcon={<AspectRatio />}
         disabled={!uploadImage}
         onClick={() => {
-          cropper.setAspectRatio(1080 / 630);
+          cropper.setAspectRatio(1080 / 690);
           handleAspectRatio(false);
         }}
       >

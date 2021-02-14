@@ -32,8 +32,8 @@ export const SCTextArea = styled.textarea<{
     color: rgba(${color.colorText.r},${color.colorText.g},${
       color.colorText.b
     },${color.colorText.a});
-    top: ${alignment.verticalAlign ? "60px" : ""};
-    bottom: ${!alignment.verticalAlign ? "60px" : ""};
+    top: ${alignment.verticalAlign ? "0" : ""};
+    bottom: ${!alignment.verticalAlign ? "0" : ""};
     text-align: ${alignment.horizontalAlign};
     padding-top: ${
       alignment.verticalPosition
@@ -69,8 +69,8 @@ export const SCText = styled.pre<{
     verticalPosition &&
     `display: flex; justify-content: center;
     align-items: center;
-    top: ${alignment.verticalAlign ? "60px" : ""};
-    bottom: ${!alignment.verticalAlign ? "60px" : ""};
+    top: ${alignment.verticalAlign ? "0" : ""};
+    bottom: ${!alignment.verticalAlign ? "0" : ""};
     text-align: ${alignment.horizontalAlign};
     background-color: rgba(${color.colorBcg.r},${color.colorBcg.g},${
       color.colorBcg.b
