@@ -40,7 +40,7 @@ const SettingsProBlock: React.FC<SettingsProBlock> = ({ disabled }) => {
   const dispatch = useDispatch();
 
   const [state, setState] = React.useState(false);
-  const [logo, setLogo] = React.useState(false);
+  const [logo, setLogo] = React.useState(true);
 
   const { verticalPosition } = useSelector(
     ({ alignment }: IAlignment) => alignment

@@ -1,7 +1,7 @@
 import produce from "immer";
 import Logo from "../../assets/logo.png";
 const initialState = {
-  showLogo: false,
+  showLogo: true,
   typeLogo: Logo,
 };
 
